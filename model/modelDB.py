@@ -7,10 +7,10 @@ class StudentUser(db.Model):
     student_id=db.Column(db.String(13),unique=True)
     application_id=db.Column(db.Integer(),unique=True)
 
+    __tablename__ = 'student_user'#指定对应数据库表student_user
 
-    __tablename__ = 'student_user'
-
-    def __init__(self,username,student_id,application_id):
+    def __init__(self,username,student_id,application_id=None):
+        '''初始化StudentUser'''
         self.username=username
         self.student_id=student_id
         self.application_id=application_id
