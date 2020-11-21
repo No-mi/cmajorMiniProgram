@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from model.studentDB import getStudentUserByUserName, InsertStudent
+from model.studentDB import getStudentUserByUserName, insertStudent, deleteStudent
 from model.modelDB import StudentUser
 student = Blueprint("student", __name__)    # 实例化student蓝图
 
@@ -12,5 +12,18 @@ def getStudentInfo():
 def insertStudentUser():
     username=request.args['username']
     student_id=request.args['student_id']
-    InsertStudent(username,student_id)
+    insertStudent(username,student_id)
+    return "OK"
+
+@student.route('/deleteStudentUser',methods=['GET'])
+def deleteStudentUser():
+    student_id=request.args['student_id']
+    deleteStudent(student_id)
+    return "OK"
+
+@student.route('/updateStudentInfo',methods=['GET'])
+def updateStudentInfo():
+    username=request.args['username']
+    student_id=request.args['student_id']
+    updateStudentInfo(student_id,username)
     return "OK"

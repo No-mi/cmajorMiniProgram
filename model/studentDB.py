@@ -12,8 +12,16 @@ def getStudentUserByStudentID(student_id):
     print(user)
     return user
 
-def InsertStudent(username,student_id):
+def insertStudent(username,student_id):
     """插入一个学生用户"""
     user=StudentUser(username=username,student_id=student_id)
     db.session.add(user)
     db.session.commit()
+
+def deleteStudent(student_id):
+    """删除一个学生用户"""
+    StudentUser.query.filter_by(student_id=student_id).delete()
+
+def updateStudentInfo(student_id,username):
+    """修改指定学号学生用户名"""
+    StudentUser.query.filter_by(student_id=student_id).update({'username':username})
