@@ -3,9 +3,9 @@ from model.studentDB import getStudentUserByUserName, InsertStudent
 from model.modelDB import StudentUser
 student = Blueprint("student", __name__)    # 实例化student蓝图
 
-@student.route('/getInfo')
+@student.route('/getInfo',methods=["GET"])
 def getStudentInfo():
-    user=getStudentUserByUserName("nomi")
+    user=getStudentUserByUserName(request.args['username'])
     return user.to_json()
 
 @student.route('/insertStudentUser',methods=['GET'])
