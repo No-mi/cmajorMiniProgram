@@ -10,6 +10,9 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
+
+
+
 #配置数据库
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:eroch123@112.126.102.75:3306/cmajorminiProgram' #指定数据库地址、用户名、密码
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
