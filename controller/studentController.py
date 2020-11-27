@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, request
 
 from model.couresDB import getCoursesByStudentId
@@ -33,6 +35,5 @@ def updateStudentUserInfo():
 def getCourse():
     student_id=request.args['student_id']
     courses=getCoursesByStudentId(student_id)
-    for i in courses:
-        print(i.to_json())
-    return "OK"
+    print(courses)
+    return "json.dumps(courses)"

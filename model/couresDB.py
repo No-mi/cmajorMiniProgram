@@ -1,8 +1,7 @@
 from model.modelDB import StudentCourse
 
-
 def getCoursesByStudentId(studentId):
-    """根据姓名查询学生信息"""
-    course = StudentCourse.query.filter_by(studentId=studentId)
-    print("course",course)
-    return  course
+    """根据学号查询已修读课程"""
+    courses = StudentCourse.query.filter_by(studentId=studentId)
+    return list(map(lambda x:x.cId,courses))
+
