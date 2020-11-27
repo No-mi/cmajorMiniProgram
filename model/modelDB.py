@@ -6,6 +6,7 @@ class StudentUser(db.Model):
     username = db.Column(db.String(20), unique=False, primary_key=True)
     student_id = db.Column(db.String(13), unique=True)
     application_id = db.Column(db.Integer(), unique=True)
+    student_tel=db.Column(db.String,unique=True)
 
     __tablename__ = 'student_user'  # 指定对应数据库表student_user
 
