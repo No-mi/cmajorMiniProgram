@@ -29,20 +29,21 @@ class StudentUser(db.Model):
             del item["_sa_instance_state"]
         return item
 
-class TeacherUser(db.Model):
-    """:cvar
+class StudentCourse(db.Model):
+    cId=db.Column(db.Integer(1), unique=True)
+    havePassed = db.Column(db.Integer(1), unique=True)
+    studentId=db.Column(db.VARCHAR(40), unique=True)
+    __tablename__ = 'studentcourse'  # 指定对应数据库表student_user
 
-    """
-    __tablename__='teacher_user' # 指定对应数据库表teacher_user
-    teacher_id=db.Column(db.Integer,primary_key=True)
-    teacher_name=db.Column(db.String(20),unique=True)
+    def __init__(self, cId,havePassed,studentId):
+        """初始化StudentUser"""
+        self.cId=cId
+        self.havePassed=havePassed
+        self.studentId=studentId
+
+
     def __repr__(self):
-        return '<User %r>' % self.teacher_name
-
-    #初始化
-    def __init__(self,teacher_id,name):
-        self.teacher_id=teacher_id
-        self.name=name
+        return '<User %r>' % self.username
 
     def to_json(self):
         """将实例对象转化为json"""
@@ -50,4 +51,3 @@ class TeacherUser(db.Model):
         if "_sa_instance_state" in item:
             del item["_sa_instance_state"]
         return item
-

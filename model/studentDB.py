@@ -7,13 +7,11 @@ def getStudentUserByUserName(username):
     print(user)
     return user
 
-
 def getStudentUserByStudentID(student_id):
     """根据学号查找学生信息"""
     user = StudentUser.query.filter_by(student_id=student_id).first()
     print(user)
     return user
-
 
 def insertStudent(username, student_id):
     """插入一个学生用户"""
