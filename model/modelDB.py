@@ -26,7 +26,7 @@ class StudentUser(db.Model):
         return item
 
 class StudentCourse(db.Model):
-    cId=db.Column(db.Integer(), unique=True, primary_key=True)
+    cId=db.Column(db.VARCHAR(9), unique=True, primary_key=True)
     havePassed = db.Column(db.Integer(), unique=True)
     studentId=db.Column(db.VARCHAR(40), unique=True, primary_key=True)
     __tablename__ = 'studentcourse'  # 指定对应数据库表student_user
@@ -72,6 +72,34 @@ class Application(db.Model):
         self.ID=ID
     def __repr__(self):
         return '<openID %r>' % self.openID
+    def to_json(self):
+        """将实例对象转化为json"""
+        item = self.__dict__
+        if "_sa_instance_state" in item:
+            del item["_sa_instance_state"]
+        return item
+
+class Course(db.Model):
+    __tablename__ = 'studentcourse'  # 指定对应数据库表studentcourse
+
+    cId=db.Column(db.VARCHAR(9), unique=True, primary_key=True)
+    cname = db.Column(db.VARCHAR(20), unique=True)
+    cinstitute=db.Column(db.VARCHAR(20), unique=True, primary_key=True)
+    credit=db.Column(db.Integer())
+    time=db.Column(db.VARCHAR(10))
+
+    def __init__(self, cId,cname,cinstitute,credit,time):
+        """初始化StudentUser"""
+        self.cId=cId
+        self.cname=cname
+        self.cinstitute=cinstitute
+        self.credit=credit
+        self.time=time
+
+
+    def __repr__(self):
+        return '<cname %r>' % self.cname
+
     def to_json(self):
         """将实例对象转化为json"""
         item = self.__dict__
