@@ -30,9 +30,9 @@ class StudentUser(db.Model):
         return item
 
 class StudentCourse(db.Model):
-    cId=db.Column(db.Integer(1), unique=True)
-    havePassed = db.Column(db.Integer(1), unique=True)
-    studentId=db.Column(db.VARCHAR(40), unique=True)
+    cId=db.Column(db.Integer(), unique=True, primary_key=True)
+    havePassed = db.Column(db.Integer(), unique=True)
+    studentId=db.Column(db.VARCHAR(40), unique=True, primary_key=True)
     __tablename__ = 'studentcourse'  # 指定对应数据库表student_user
 
     def __init__(self, cId,havePassed,studentId):

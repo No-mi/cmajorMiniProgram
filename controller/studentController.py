@@ -1,4 +1,6 @@
 from flask import Blueprint, request
+
+from model.couresDB import getCoursesByStudentId
 from model.studentDB import getStudentUserByUserName, insertStudent, deleteStudent,updateStudentInfo
 from model.modelDB import StudentUser
 student = Blueprint("student", __name__)    # 实例化student蓝图
@@ -26,4 +28,11 @@ def updateStudentUserInfo():
     username=request.args['username']
     student_id=request.args['student_id']
     updateStudentInfo(student_id,username)
+    return "OK"
+@student.route('/getCourse',methods=['GET'])
+def getCourse():
+    student_id=request.args['student_id']
+    courses=getCoursesByStudentId(student_id)
+    for i in courses:
+        print(i.to_json())
     return "OK"
