@@ -3,20 +3,18 @@ from model.DBUtil import db
 
 
 class StudentUser(db.Model):
-    username = db.Column(db.String(20), unique=False, primary_key=True)
-    student_id = db.Column(db.String(13), unique=True)
-    application_id = db.Column(db.Integer(), unique=True)
+    name = db.Column(db.VARCHAR(20), unique=False, primary_key=True)
+    openID = db.Column(db.VARCHAR(40), unique=True)
 
-    __tablename__ = 'student_user'  # 指定对应数据库表student_user
+    __tablename__ = 'user'  # 指定对应数据库表user
 
-    def __init__(self, username, student_id, application_id=None):
+    def __init__(self, name, openID):
         """初始化StudentUser"""
-        self.username = username
-        self.student_id = student_id
-        self.application_id = application_id
+        self.name = name
+        self.openID = openID
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.name
 
     def to_json(self):
         """将实例对象转化为json"""
