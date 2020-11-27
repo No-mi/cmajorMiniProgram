@@ -45,6 +45,7 @@ class StudentCourse(db.Model):
         if "_sa_instance_state" in item:
             del item["_sa_instance_state"]
         return item
+
 class Application(db.Model):
     __tablename__ = 'application'  # 指定对应数据库表application
     openID=db.Column(db.VARCHAR(40),primary_key=True)
