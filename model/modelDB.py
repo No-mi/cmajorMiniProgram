@@ -54,21 +54,23 @@ class Application(db.Model):
     studentID=db.Column(db.VARCHAR(13))
     institute=db.Column(db.VARCHAR(20))
     major=db.Column(db.VARCHAR(20))
-    downGrade=db.Column(db.Integer)
-    choiceAfterGraduating=db.Column(db.Integer)
+    downGrade = db.Column(db.Integer)
+    grade = db.Column(db.VARCHAR(4))
+    choiceAfterGraduating = db.Column(db.Integer)
     doctor=db.Column(db.Integer)
     ID = db.Column(db.VARCHAR(18))
     courses = []
 
-    def __init__(self, openID,name,studentID,institute,major,downGrade,choiceAfterGraduating,doctor,ID):
+    def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID):
         """初始化application"""
-        self.openID=openID
-        self.name=name
-        self.studentID=studentID
-        self.institute=institute
-        self.major=major
-        self.downGrade=downGrade
-        self.choiceAfterGraduating=choiceAfterGraduating
+        self.openID = openID
+        self.name = name
+        self.studentID = studentID
+        self.institute = institute
+        self.major = major
+        self.grade = grade
+        self.downGrade = downGrade
+        self.choiceAfterGraduating = choiceAfterGraduating
         self.doctor = doctor
         self.ID = ID
 

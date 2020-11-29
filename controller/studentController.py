@@ -62,18 +62,20 @@ def setCourse():
     if checkUser("111") is False:
         return 0
     studentName = request.form.get("studentName")
-    print("student", studentName)
+    # print("student", studentName)
     openID = request.form.get("openID")
     studentID = request.form.get("studentID")
     institute = request.form.get("institute")
     major = request.form.get("major")
+    grade = request.form.get("grade")
     downGrade = int(request.form.get("downGrade"))
-    print("dwonGrade", downGrade)
+    # print("dwonGrade", downGrade)
     choiceAfterGraduating = int(request.form.get("choiceAfterGraduating"))
     doctor = int(request.form.get("doctor"))
     ID = int(request.form.get("ID"))
     courses = getCoursesByStudentId(studentID)
-    insertApplicqtion(openID, studentName, studentID, institute, major, downGrade, choiceAfterGraduating, doctor, ID,
+    insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
+                      ID,
                       courses)
     return "OK"
 
@@ -87,12 +89,13 @@ def updateApplication():
     institute = request.form.get("institute")
     major = request.form.get("major")
     downGrade = int(request.form.get("downGrade"))
+    grade = request.form.get("grade")
     print("dwonGrade", downGrade)
     choiceAfterGraduating = int(request.form.get("choiceAfterGraduating"))
     doctor = int(request.form.get("doctor"))
     ID = int(request.form.get("ID"))
     courses = getCoursesByStudentId(studentID)
-    updateApplicationByOpenID(openID, studentName, studentID, studentID, institute, major, downGrade,
+    updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade,
                               choiceAfterGraduating, doctor, ID, courses)
     return "OK"
 

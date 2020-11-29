@@ -11,7 +11,7 @@
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://112.126.102.75:3306/miniProgram</jdbc-url>
+      <jdbc-url>jdbc:mysql://112.126.102.75:3306/cmajorminiProgram</jdbc-url>
     </data-source>
   </component>
 </project>
