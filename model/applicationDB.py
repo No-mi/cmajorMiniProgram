@@ -8,12 +8,15 @@ def getApplicationByIdName(name,openID,studentId):
     # return list(map(lambda x:x.cId,application))
     return application
 
-def insertApplicqtion(openID,name,studentID,institute,major,downGrade,choiceAfterGraduating,doctor,ID):
+def insertApplicqtion(openID, name, studentID, institute, major, downGrade, choiceAfterGraduating, doctor, ID, courses):
     """插入一个申请表信息"""
-    application = Application(openID=openID,name=name,studentID=studentID,institute=institute,
-                              major=major,downGrade=downGrade,
-                              choiceAfterGraduating=choiceAfterGraduating,doctor=doctor,ID=ID)
+    application = Application(openID=openID, name=name, studentID=studentID, institute=institute,
+                              major=major, downGrade=downGrade,
+                              choiceAfterGraduating=choiceAfterGraduating, doctor=doctor, ID=ID)
     db.session.add(application)
+    # TODO 插入申请时添加课程修读信息
+    # for i in courses:
+    #     course=
     db.session.commit()
 
 def deleteApplication(name,openID,studentId):

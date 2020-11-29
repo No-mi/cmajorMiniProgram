@@ -1,5 +1,6 @@
 # config=utf-8
 from model.DBUtil import db
+from model.couresDB import getCoursesByStudentId
 
 
 class StudentUser(db.Model):
@@ -56,7 +57,8 @@ class Application(db.Model):
     downGrade=db.Column(db.Integer)
     choiceAfterGraduating=db.Column(db.Integer)
     doctor=db.Column(db.Integer)
-    ID=db.Column(db.VARCHAR(18))
+    ID = db.Column(db.VARCHAR(18))
+    courses = []
 
     def __init__(self, openID,name,studentID,institute,major,downGrade,choiceAfterGraduating,doctor,ID):
         """初始化application"""
@@ -67,16 +69,21 @@ class Application(db.Model):
         self.major=major
         self.downGrade=downGrade
         self.choiceAfterGraduating=choiceAfterGraduating
-        self.doctor=doctor
-        self.ID=ID
+        self.doctor = doctor
+        self.ID = ID
+
     def __repr__(self):
         return '<openID %r>' % self.openID
+
     def to_json(self):
         """将实例对象转化为json"""
         item = self.__dict__
         if "_sa_instance_state" in item:
             del item["_sa_instance_state"]
         return item
+
+    def getCourses(self):
+        self.courses = getCoursesByStudentId(self.studentID)
 
 class Course(db.Model):
     __tablename__ = 'studentcourse'  # 指定对应数据库表studentcourse
@@ -94,7 +101,6 @@ class Course(db.Model):
         self.cinstitute=cinstitute
         self.credit=credit
         self.time=time
-
 
     def __repr__(self):
         return '<cname %r>' % self.cname

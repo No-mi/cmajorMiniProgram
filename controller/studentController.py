@@ -25,15 +25,35 @@ def deleteStudentUser():
     deleteStudent(student_id)
     return "OK"
 
-@student.route('/updateStudentInfo',methods=['GET'])
+@student.route('/updateStudentInfo', methods=['GET'])
 def updateStudentUserInfo():
-    username=request.args['username']
-    student_id=request.args['student_id']
-    updateStudentInfo(student_id,username)
+    username = request.args['username']
+    student_id = request.args['student_id']
+    updateStudentInfo(student_id, username)
     return "OK"
-@student.route('/getCourse',methods=['GET'])
+
+
+@student.route('/getCourse', methods=['GET'])
 def getCourse():
-    student_id=request.args['student_id']
-    courses=getCoursesByStudentId(student_id)
-    print(courses)
-    return "json.dumps(courses)"
+    student_id = request.args['student_id']
+    courses = getCoursesByStudentId(student_id)
+    return json.dumps(list(map(lambda x: x.cId, courses)))
+
+
+@student.route('/setApplication', methods=['POST'])
+def setCourse():
+    studentName = request.args.get("studentName")
+    openID = request.args.get("openID")
+    studentID = request.args.get("studentID")
+    institute = request.args.get("institute")
+    major = request.args.get("major")
+    downGrade = int(request.args.get("downGrade"))
+    choiceAfterGraduating = int(request.args.get("choiceAfterGraduating"))
+    doctor = int(request.args.get("doctor"))
+    ID = int(request.args.get("ID"))
+    courses = []
+
+
+@student.route('/login', methods=['GET'])
+def login():
+    code = request.args['code']
