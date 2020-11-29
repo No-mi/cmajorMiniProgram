@@ -7,10 +7,10 @@ def getStudentUserByUserName(username):
     print(user)
     return user
 
-def getStudentUserByStudentID(student_id):
+def getStudentUserByOpenID(openId):
     """根据微信用户id查找学生信息"""
-    user = StudentUser.query.filter_by(openID=student_id).first()
-    print(user)
+    user = StudentUser.query.filter_by(openID=openId).first()
+    # print(user)
     return user
 
 def insertStudent(username, student_id):

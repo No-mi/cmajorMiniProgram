@@ -2,7 +2,7 @@ import requests, json
 from Crypto.Cipher import AES
 import base64
 
-from model.studentDB import getStudentUserByOpenId, insertStudent
+from model.studentDB import getStudentUserByOpenID, insertStudent
 
 
 class WXBizDataCrypt:
@@ -44,8 +44,13 @@ def onLogin(code, encryptedData, iv):
     pc = WXBizDataCrypt(appID, session_key)  # 对用户信息进行解密
     userInfo = pc.decrypt(encryptedData, iv)  # 获得用户信息
     print(userInfo)
-    user = getStudentUserByOpenId(userInfo['openId'])
+    user = getStudentUserByOpenID(userInfo['openId'])
     if (user):
         print(user.to_json())
     else:
         insertStudent(userInfo['openId'], userInfo['nickName'], "123")
+
+
+# TODO  实现用户验证
+def checkUser(session_id):
+    return True

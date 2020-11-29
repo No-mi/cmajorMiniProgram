@@ -1,6 +1,6 @@
 # config=utf-8
 from model.DBUtil import db
-from model.couresDB import getCoursesByStudentId
+# from model.couresDB import getCoursesByStudentId
 
 
 class StudentUser(db.Model):
@@ -82,11 +82,11 @@ class Application(db.Model):
             del item["_sa_instance_state"]
         return item
 
-    def getCourses(self):
-        self.courses = getCoursesByStudentId(self.studentID)
+    # def getCourses(self):
+    #     self.courses = getCoursesByStudentId(self.studentID)
 
 class Course(db.Model):
-    __tablename__ = 'studentcourse'  # 指定对应数据库表studentcourse
+    __tablename__ = 'courses'  # 指定对应数据库表studentcourse
 
     cId=db.Column(db.VARCHAR(9), unique=True, primary_key=True)
     cname = db.Column(db.VARCHAR(20), unique=True)
