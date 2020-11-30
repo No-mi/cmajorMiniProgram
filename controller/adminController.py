@@ -2,7 +2,8 @@ import json
 
 from flask import Blueprint
 
-from model.applicationDB import getAllApplication, getGradeStatistic
+from model.applicationDB import getAllApplication, getGradeStatistic, getSexCount, getMajorStatistic
+from model.studentCourseDB import getPassedCoursesByStudenID, getCreditStatistic
 
 admin = Blueprint("admin", __name__)  # 实例化teacher蓝图
 
@@ -15,10 +16,28 @@ def getApplications():
 
 @admin.route('/getSexInfo')
 def getSexInfo():
-    return 0
+    res = getSexCount()
+    return {"male": res.count(1), "female": res.count(0)}
 
 
 @admin.route('/getGradeInfo')
 def getGradeInfo():
     res = getGradeStatistic()
-    return ")K"
+    return json.dumps(list(res))
+
+
+@admin.route('/getMajorInfo')
+def getMajorInfo():
+    res = getMajorStatistic()
+    return json.dumps(list(res))
+
+
+# TODO 获取课程修读数据
+@admin.route('/getCousesInfo')
+def getCourseInfo():
+    pass
+
+
+@admin.route('/getCredit', methods=['GET'])
+def getCredit():
+    return json.dumps(getCreditStatistic())

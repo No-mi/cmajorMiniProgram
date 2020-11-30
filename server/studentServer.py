@@ -54,3 +54,7 @@ def onLogin(code, encryptedData, iv):
 # TODO  实现用户验证
 def checkUser(session_id):
     return True
+
+# TODO 图片上传
+# TODO 图片获取
+# TODO 课程统计

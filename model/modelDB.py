@@ -1,6 +1,5 @@
 # config=utf-8
 from model.DBUtil import db
-# from model.couresDB import getCoursesByStudentId
 
 
 class StudentUser(db.Model):
@@ -49,16 +48,20 @@ class StudentCourse(db.Model):
 
 class Application(db.Model):
     __tablename__ = 'application'  # 指定对应数据库表application
-    openID=db.Column(db.VARCHAR(40),primary_key=True)
-    name=db.Column(db.VARCHAR(20))
-    studentID=db.Column(db.VARCHAR(13))
-    institute=db.Column(db.VARCHAR(20))
-    major=db.Column(db.VARCHAR(20))
+    openID = db.Column(db.VARCHAR(40), primary_key=True)
+    name = db.Column(db.VARCHAR(20))
+    studentID = db.Column(db.VARCHAR(13))
+    institute = db.Column(db.VARCHAR(20))
+    major = db.Column(db.VARCHAR(20))
     downGrade = db.Column(db.Integer)
     grade = db.Column(db.VARCHAR(4))
     choiceAfterGraduating = db.Column(db.Integer)
-    doctor=db.Column(db.Integer)
+    doctor = db.Column(db.Integer)
     ID = db.Column(db.VARCHAR(18))
+    academicRecord = db.Column(db.VARCHAR(40))
+    CETRecord = db.Column(db.VARCHAR(100))
+    otherFIle = db.Column(db.VARCHAR(100))
+    speciality = db.Column(db.VARCHAR(100))
     courses = []
 
     def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID):
@@ -73,6 +76,7 @@ class Application(db.Model):
         self.choiceAfterGraduating = choiceAfterGraduating
         self.doctor = doctor
         self.ID = ID
+        # self.courses=getPassedCoursesByStudenID(self.studentID)
 
     def __repr__(self):
         return '<openID %r>' % self.openID

@@ -3,7 +3,9 @@ import json
 from flask import Blueprint, request, session
 
 from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, getApplicationByOpenID
-from model.couresDB import getCoursesByStudentId
+# from model.couresDB import getCoursesByStudentId
+from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStudenID, updateCourseByStudentID, \
+    getCreditStatistic
 from model.studentDB import getStudentUserByUserName, insertStudent, deleteStudent, updateStudentInfo
 from model.modelDB import StudentUser
 from server.studentServer import checkUser
@@ -30,6 +32,7 @@ def deleteStudentUser():
     deleteStudent(student_id)
     return "OK"
 
+
 @student.route('/updateStudentInfo', methods=['GET'])
 def updateStudentUserInfo():
     username = request.args['username']
@@ -38,11 +41,11 @@ def updateStudentUserInfo():
     return "OK"
 
 
-@student.route('/getCourse', methods=['GET'])
-def getCourse():
-    student_id = request.args['student_id']
-    courses = getCoursesByStudentId(student_id)
-    return json.dumps(list(map(lambda x: x.cId, courses)))
+# @student.route('/getPassedCourseByStudentID', methods=['GET'])
+# def getCourse():
+#     student_id = request.args['student_id']
+#     # courses = getCoursesByStudentId(student_id)
+#     return json.dumps(list(map(lambda x: x.cId, courses)))
 
 
 @student.route('/setSession', methods=['GET'])
@@ -57,8 +60,10 @@ def checkSession():
     return session.get('username')
 
 
+# openID=ooo&studentName=courseTest&studentID2018141531004&institute=wangan&major=wangan&grade=2018&downGrade=1&choiceAfterGraduating=1&doctor=1&ID=341602200008087181&courses=["107032030","10711500"]
+# TODO 课程修读情况处理及存储
 @student.route('/setApplication', methods=['POST'])
-def setCourse():
+def setApplication():
     if checkUser("111") is False:
         return 0
     studentName = request.form.get("studentName")
@@ -73,12 +78,11 @@ def setCourse():
     choiceAfterGraduating = int(request.form.get("choiceAfterGraduating"))
     doctor = int(request.form.get("doctor"))
     ID = int(request.form.get("ID"))
-    courses = getCoursesByStudentId(studentID)
+    courses = request.form.get("courses")
+    setCourseByStudentID(courses, studentID)
     insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
-                      ID,
-                      courses)
+                      ID, courses)
     return "OK"
-
 
 @student.route('/updateApplication', methods=['POST'])
 def updateApplication():
@@ -94,11 +98,19 @@ def updateApplication():
     choiceAfterGraduating = int(request.form.get("choiceAfterGraduating"))
     doctor = int(request.form.get("doctor"))
     ID = int(request.form.get("ID"))
-    courses = getCoursesByStudentId(studentID)
+    courses = request.form.get("courses")
+    print("studentID", studentID)
+    print("getCourses (UPdate", courses)
     updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade,
                               choiceAfterGraduating, doctor, ID, courses)
-    return "OK"
+    updateCourseByStudentID(courses, studentID)
+    return getApplicationByOpenID(openID).to_json()
 
+
+@student.route('/getApplicationByOpenID', methods=['GET'])
+def getAppli():
+    openID = request.args.get("openID")
+    return getApplicationByOpenID(openID).to_json()
 
 @student.route('/login', methods=['GET'])
 def login():
@@ -109,4 +121,5 @@ def login():
 def getApplication():
     openID = request.args.get("openID")
     appli = getApplicationByOpenID(openID)
+    appli.courses = getPassedCoursesByStudenID(appli.studentId)
     return appli.to_json()
