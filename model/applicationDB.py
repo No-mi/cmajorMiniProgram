@@ -19,11 +19,12 @@ def getApplicationByOpenID(openID):
     return application
 
 def insertApplicqtion(openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
-                      courses):
+                      courses, CET, CETScore, GPA):
     """插入一个申请表信息"""
     application = Application(openID=openID, name=name, studentID=studentID, institute=institute,
                               major=major, grade=grade, downGrade=downGrade,
-                              choiceAfterGraduating=choiceAfterGraduating, doctor=doctor, ID=ID)
+                              choiceAfterGraduating=choiceAfterGraduating, doctor=doctor, ID=ID, CET=CET,
+                              CETScore=CETScore, GPA=GPA)
     db.session.add(application)
     # TODO 插入申请时添加课程修读信息
     # for i in courses:
@@ -35,14 +36,16 @@ def deleteApplication(name, openID, studentId):
     """根据姓名/微信编号/学号删除一个申请表信息"""
     Application.query.filter_by(or_(openID == openID, name=name, studentId=studentId)).delete()
 
+
 def updateApplicationByOpenID(openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
-                              courses):
+                              courses, CET, CETScore, GPA):
     """修改指定姓名用户的姓名"""
     Application.query.filter_by(openID=openID).update(
         {'name': name, 'studentID': studentID, 'institute': institute, 'major': major, 'grade': grade,
          'downGrade': downGrade,
-         'choiceAfterGraduating': choiceAfterGraduating, 'doctor': doctor, 'ID': ID})
+         'choiceAfterGraduating': choiceAfterGraduating, 'doctor': doctor, 'ID': ID, 'CET': CET, 'CETScore': CETScore,
+         'GPA': GPA})
 
 def getAllApplication():
     """获取所有申请信息"""

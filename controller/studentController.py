@@ -79,9 +79,12 @@ def setApplication():
     doctor = int(request.form.get("doctor"))
     ID = int(request.form.get("ID"))
     courses = request.form.get("courses")
+    CET = request.form.get("CET")
+    CETScore = request.form.get("CETScore")
+    GPA = request.form.get("GPA")
     setCourseByStudentID(courses, studentID)
     insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
-                      ID, courses)
+                      ID, courses, CET, CETScore, GPA)
     return "OK"
 
 @student.route('/updateApplication', methods=['POST'])
@@ -99,10 +102,13 @@ def updateApplication():
     doctor = int(request.form.get("doctor"))
     ID = int(request.form.get("ID"))
     courses = request.form.get("courses")
+    CET = request.form.get("CET")
+    CETScore = request.form.get("CETScore")
+    GPA = request.form.get("GPA")
     print("studentID", studentID)
     print("getCourses (UPdate", courses)
     updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade,
-                              choiceAfterGraduating, doctor, ID, courses)
+                              choiceAfterGraduating, doctor, ID, courses, CET, CETScore, GPA)
     updateCourseByStudentID(courses, studentID)
     return getApplicationByOpenID(openID).to_json()
 

@@ -62,9 +62,13 @@ class Application(db.Model):
     CETRecord = db.Column(db.VARCHAR(100))
     otherFIle = db.Column(db.VARCHAR(100))
     speciality = db.Column(db.VARCHAR(100))
+    CET = db.Column(db.Integer)
+    CETScore = db.Column(db.Integer)
+    GPA = db.Column(db.Float)
     courses = []
 
-    def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID):
+    def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
+                 CET, CETScore, GPA):
         """初始化application"""
         self.openID = openID
         self.name = name
@@ -76,6 +80,9 @@ class Application(db.Model):
         self.choiceAfterGraduating = choiceAfterGraduating
         self.doctor = doctor
         self.ID = ID
+        self.CET = CET
+        self.CETScore = CETScore
+        self.GPA = GPA
         # self.courses=getPassedCoursesByStudenID(self.studentID)
 
     def __repr__(self):
