@@ -49,23 +49,23 @@ class StudentCourse(db.Model):
 class Application(db.Model):
     __tablename__ = 'application'  # 指定对应数据库表application
     openID = db.Column(db.VARCHAR(40), primary_key=True)
-    name = db.Column(db.VARCHAR(20))
-    studentID = db.Column(db.VARCHAR(13))
-    institute = db.Column(db.VARCHAR(20))
-    major = db.Column(db.VARCHAR(20))
-    downGrade = db.Column(db.Integer)
-    grade = db.Column(db.VARCHAR(4))
-    choiceAfterGraduating = db.Column(db.Integer)
-    doctor = db.Column(db.Integer)
-    ID = db.Column(db.VARCHAR(18))
-    academicRecord = db.Column(db.VARCHAR(40))
-    CETRecord = db.Column(db.VARCHAR(100))
-    otherFIle = db.Column(db.VARCHAR(100))
-    speciality = db.Column(db.VARCHAR(100))
-    CET = db.Column(db.Integer)
-    CETScore = db.Column(db.Integer)
-    GPA = db.Column(db.Float)
-    courses = []
+    name = db.Column(db.VARCHAR(20))  # 姓名
+    studentID = db.Column(db.VARCHAR(13))  # 学号
+    institute = db.Column(db.VARCHAR(20))  # 原学院
+    major = db.Column(db.VARCHAR(20))  # 原专业
+    downGrade = db.Column(db.Integer)  # 是否同意降级 0：不同意 1：同一
+    grade = db.Column(db.VARCHAR(4))  # 年级
+    choiceAfterGraduating = db.Column(db.Integer)  # 毕业后选择
+    doctor = db.Column(db.Integer)  # 是否打算读博
+    ID = db.Column(db.VARCHAR(18))  # 身份证号
+    academicRecord = db.Column(db.VARCHAR(40))  # 成绩单图片地址
+    CETRecord = db.Column(db.VARCHAR(100))  # 四六级成绩单图片地址
+    otherFIle = db.Column(db.VARCHAR(100))  # 其他证明材料地址，若无则为0
+    speciality = db.Column(db.VARCHAR(100))  # 不满足申报条件但是有特长的证明材料图片地址，若无则为0
+    CET = db.Column(db.Integer)  # 上传的成绩 0：四级 1：六级
+    CETScore = db.Column(db.Integer)  # 四六级成绩
+    GPA = db.Column(db.Float)  # 绩点
+    courses = []  # 已修读课程列表
 
     def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
                  CET, CETScore, GPA):
