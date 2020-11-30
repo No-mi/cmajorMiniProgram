@@ -22,8 +22,8 @@ db.init_app(app)
 app.config['SECRET_KEY'] = 'sessionKEY123'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # 设置session的保存时间。
 
-app.register_blueprint(student, url_prefix='/student')
-app.register_blueprint(admin, url_prefix='/admin')
 
 if __name__ == '__main__':
+    app.register_blueprint(student, url_prefix='/student')
+    app.register_blueprint(admin, url_prefix='/admin')
     app.run(host="0.0.0.0", port=5000)
