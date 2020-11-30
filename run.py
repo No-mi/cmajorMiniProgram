@@ -8,7 +8,7 @@ from model.DBUtil import db
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/test')
 def hello_world():
     return 'Hello World!'
 
