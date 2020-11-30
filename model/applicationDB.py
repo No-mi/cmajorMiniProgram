@@ -16,13 +16,13 @@ def getApplicationByOpenID(openID):
     return application
 
 
-def insertApplicqtion(openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
-                      courses, CET, CETScore, GPA, phoneNumber):
+def insertApplicqtion(openID, name, studentID,phoneNumber , institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
+                      academicRecord ,CETRecord ,otherFIle ,speciality ,courses, CET, CETScore, GPA):
     """插入一个申请表信息"""
-    application = Application(openID=openID, name=name, studentID=studentID, institute=institute,
-                              major=major, grade=grade, downGrade=downGrade,
-                              choiceAfterGraduating=choiceAfterGraduating, doctor=doctor, ID=ID, CET=CET,
-                              CETScore=CETScore, GPA=GPA, phoneNumber=phoneNumber)
+    application = Application(openID=openID, name=name, studentID=studentID, phoneNumber=phoneNumber,institute=institute,
+                              major=major, grade=grade, downGrade=downGrade,choiceAfterGraduating=choiceAfterGraduating,
+                              doctor=doctor, ID=ID, academicRecord=academicRecord,CETRecord=CETRecord,otherFIle=otherFIle,speciality=speciality,
+                              courses=courses,CET=CET, CETScore=CETScore, GPA=GPA)
     db.session.add(application)
     db.session.commit()
 
@@ -32,14 +32,12 @@ def deleteApplication(name, openID, studentId):
 
 
 def updateApplicationByOpenID(openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
-                              doctor, ID,
-                              courses, CET, CETScore, GPA, phoneNumber):
+                              doctor, ID,academicRecord,CETRecord,otherFIle,courses, CET, CETScore, GPA, phoneNumber):
     """修改指定姓名用户的姓名"""
     Application.query.filter_by(openID=openID).update(
-        {'name': name, 'studentID': studentID, 'institute': institute, 'major': major, 'grade': grade,
-         'downGrade': downGrade,
-         'choiceAfterGraduating': choiceAfterGraduating, 'doctor': doctor, 'ID': ID, 'CET': CET, 'CETScore': CETScore,
-         'GPA': GPA, 'phoneNumber': phoneNumber})
+        {'name': name, 'studentID': studentID, 'phoneNumber': phoneNumber, 'institute': institute, 'major': major, 'grade': grade,
+         'downGrade': downGrade,'choiceAfterGraduating': choiceAfterGraduating, 'doctor': doctor, 'ID': ID, 'academicRecord':academicRecord,
+         'CETRecord':CETRecord,'otherFIle':otherFIle,'courses':courses,'CET': CET, 'CETScore': CETScore, 'GPA': GPA})
 
 
 def getAllApplication():
