@@ -1,5 +1,4 @@
-# from model.modelDB import Application
-# from sqlalchemy import or_
+# -*- coding: UTF-8 -*-
 from .couresDB import getAllCourses
 from .modelDB import *
 from flask import flash

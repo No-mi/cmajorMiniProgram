@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import tempfile
 
 from reportlab.lib import colors

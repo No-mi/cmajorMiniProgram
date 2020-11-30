@@ -1,4 +1,4 @@
-# from model.modelDB import Application
+# -*- coding: UTF-8 -*-
 from sqlalchemy import or_
 from .modelDB import *
 from .studentCourseDB import getPassedCoursesByStudenID, getCreditStatistic

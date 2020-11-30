@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import requests, json
 from Crypto.Cipher import AES
 import base64

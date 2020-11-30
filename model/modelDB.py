@@ -1,4 +1,4 @@
-# config=utf-8
+# -*- coding: UTF-8 -*-
 from model.DBUtil import db
 
 
