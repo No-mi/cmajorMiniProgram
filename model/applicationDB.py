@@ -12,21 +12,18 @@ def getApplicationByIdName(name, openID, studentId):
 def getApplicationByOpenID(openID):
     """根据姓名/微信编号/学号查询申请表信息"""
     application = Application.query.filter_by(openID=openID).first()
-    # return list(map(lambda x:x.cId,application))
-    application.courses = getPassedCoursesByStudenID(application.studentID)
+    application.courses = getPassedCoursesByStudenID(application.studentID)  # 获取修读课程列表
     return application
 
+
 def insertApplicqtion(openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
-                      courses, CET, CETScore, GPA):
+                      courses, CET, CETScore, GPA, phoneNumber):
     """插入一个申请表信息"""
     application = Application(openID=openID, name=name, studentID=studentID, institute=institute,
                               major=major, grade=grade, downGrade=downGrade,
                               choiceAfterGraduating=choiceAfterGraduating, doctor=doctor, ID=ID, CET=CET,
-                              CETScore=CETScore, GPA=GPA)
+                              CETScore=CETScore, GPA=GPA, phoneNumber=phoneNumber)
     db.session.add(application)
-    # TODO 插入申请时添加课程修读信息
-    # for i in courses:
-    #     course=
     db.session.commit()
 
 def deleteApplication(name, openID, studentId):
@@ -36,13 +33,13 @@ def deleteApplication(name, openID, studentId):
 
 def updateApplicationByOpenID(openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
-                              courses, CET, CETScore, GPA):
+                              courses, CET, CETScore, GPA, phoneNumber):
     """修改指定姓名用户的姓名"""
     Application.query.filter_by(openID=openID).update(
         {'name': name, 'studentID': studentID, 'institute': institute, 'major': major, 'grade': grade,
          'downGrade': downGrade,
          'choiceAfterGraduating': choiceAfterGraduating, 'doctor': doctor, 'ID': ID, 'CET': CET, 'CETScore': CETScore,
-         'GPA': GPA})
+         'GPA': GPA, 'phoneNumber': phoneNumber})
 
 
 def getAllApplication():

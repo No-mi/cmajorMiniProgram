@@ -51,6 +51,7 @@ class Application(db.Model):
     openID = db.Column(db.VARCHAR(40), primary_key=True)
     name = db.Column(db.VARCHAR(20))  # 姓名
     studentID = db.Column(db.VARCHAR(13))  # 学号
+    phoneNumber = db.Column(db.VARCHAR(11))  # 电话号码
     institute = db.Column(db.VARCHAR(20))  # 原学院
     major = db.Column(db.VARCHAR(20))  # 原专业
     downGrade = db.Column(db.Integer)  # 是否同意降级 0：不同意 1：同一
@@ -68,12 +69,13 @@ class Application(db.Model):
     courses = []  # 已修读课程列表
 
     def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
-                 CET, CETScore, GPA):
+                 CET, CETScore, GPA, phoneNumber):
         """初始化application"""
         self.openID = openID
         self.name = name
         self.studentID = studentID
         self.institute = institute
+        self.phoneNumber = phoneNumber
         self.major = major
         self.grade = grade
         self.downGrade = downGrade
