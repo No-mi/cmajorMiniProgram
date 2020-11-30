@@ -79,8 +79,7 @@ def getCreditStatistic():
         'SELECT t1.studentId,sum(t2.credit) as creditSum FROM studentcourse as t1 ,courses as t2 WHERE  t1.cId=t2.cId and t1.havePassed=1 GROUP BY t1.studentId'))
     totalCredit = int(list(db.session.execute('SELECT sum(credit) as totalCredit FROM courses'))[0].totalCredit)
     for i in result:
-        print(i.studentId)
-    resP = list(map(lambda x: ({str(x.studentId): int((int(x.creditSum) // (totalCredit * 0.7)))}), result))
-    # print("RESP", resP)
-
-    return resP
+        print(i.studentId, i.creditSum, totalCredit)
+    resP = list(map(lambda x: (int((int(x.creditSum) // (totalCredit * 0.7)))), result))
+    print(resP)
+    return {'pass': resP.count(1), "NotPass": resP.count(0)}

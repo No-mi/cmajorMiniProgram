@@ -61,7 +61,7 @@ def checkSession():
 
 
 # openID=ooo&studentName=courseTest&studentID2018141531004&institute=wangan&major=wangan&grade=2018&downGrade=1&choiceAfterGraduating=1&doctor=1&ID=341602200008087181&courses=["107032030","10711500"]
-# TODO 课程修读情况处理及存储
+
 @student.route('/setApplication', methods=['POST'])
 def setApplication():
     if checkUser("111") is False:
@@ -129,3 +129,5 @@ def getApplication():
     appli = getApplicationByOpenID(openID)
     appli.courses = getPassedCoursesByStudenID(appli.studentId)
     return appli.to_json()
+
+# openID=099&studentName=courseTest&studentID=2018141518751&institute=网安&major=网安&grade=2018&downGrade=1&choiceAfterGraduating=1&grade=2018&doctor=1&ID=341602200008087191&courses=["107032030","107115000","105366020","105367010","888004010","900001010","314030020","912002010","201080030","201137050"]&CET=1&CETScore=450&GPA=3.7
