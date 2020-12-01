@@ -85,7 +85,6 @@ class Application(db.Model):
         self.CET = CET
         self.CETScore = CETScore
         self.GPA = GPA
-        # self.courses=getPassedCoursesByStudenID(self.studentID)
 
     def __repr__(self):
         return '<openID %r>' % self.openID
@@ -96,9 +95,6 @@ class Application(db.Model):
         if "_sa_instance_state" in item:
             del item["_sa_instance_state"]
         return item
-
-    # def getCourses(self):
-    #     self.courses = getCoursesByStudentId(self.studentID)
 
 class Course(db.Model):
     __tablename__ = 'courses'  # 指定对应数据库表studentcourse
@@ -127,7 +123,6 @@ class Course(db.Model):
             del item["_sa_instance_state"]
         return item
 
-
 class OtherFile(db.Model):
     __tablename__ = 'otherfiles'  # 指定对应数据库表studentcourse
 
@@ -148,7 +143,6 @@ class OtherFile(db.Model):
         if "_sa_instance_state" in item:
             del item["_sa_instance_state"]
         return item
-
 
 class Speciality(db.Model):
     __tablename__ = 'specialities'  # 指定对应数据库表studentcourse

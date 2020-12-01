@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from flask import Flask, session
+from flask import Flask, session, send_from_directory, request
 import os
 from datetime import timedelta
 from controller.studentController import student
@@ -12,6 +12,11 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
+
+@app.route("/downloadPDF", methods=['GET'])
+def index():
+    filename = request.args.get('filename')
+    return send_from_directory(r"static/PDF", filename=filename, as_attachment=True)
 
 # 配置数据库
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:eroch123@112.126.102.75:3306/cmajorminiProgram'  # 指定数据库地址、用户名、密码
