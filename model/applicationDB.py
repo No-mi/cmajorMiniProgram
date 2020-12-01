@@ -48,12 +48,10 @@ def getAllApplication():
     print("len", len(applications))
     return applications
 
-
 def getSexStatistic():
     res = list(Application.query.all())
     resC = list(map(lambda x: int(x.ID[16:17]) % 2, res))
     return {"male": resC.count(1), "female": resC.count(0)}
-
 
 def getGradeStatistic():
     result = list(db.session.execute('SELECT grade,COUNT(*) as num from application GROUP BY grade'))
@@ -69,8 +67,36 @@ def getTotalStudent():
     return len(Application.query.all())
 
 
+def setOtherFiles(otherFiles, studentID):
+    for file in otherFiles:
+        print('insert', file)
+        otherfile = OtherFile(studentID, file)
+        db.session.add(otherfile)
+        db.session.commit()
+
+
+def updateOtherFile(otherFiles, studentID):
+    OtherFile.query.filter_by()
+
+
+def setSpecialities(specialities, studentID):
+    for file in specialities:
+        print('insert', file)
+        specialityFile = Speciality(studentID, file)
+        db.session.add(specialityFile)
+        db.session.commit()
+
+
 def getSpecialStudentStatistic():
     return list(db.session.execute('select count(*) as count from application where speciality=0'))[0].count
+
+
+def deleteOtherFile(studentID):
+    OtherFile.query.filter_by(studentID=studentID).delete()
+
+
+def deleteSpecialities(studentId):
+    Speciality.query.filter_by(studentID=studentId).delete()
 
 
 def getStatisticData():
