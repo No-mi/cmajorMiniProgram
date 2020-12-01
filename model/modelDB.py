@@ -1,4 +1,4 @@
-# config=utf-8
+# -*- coding: UTF-8 -*-
 from model.DBUtil import db
 
 
@@ -119,6 +119,50 @@ class Course(db.Model):
 
     def __repr__(self):
         return '<cname %r>' % self.cname
+
+    def to_json(self):
+        """将实例对象转化为json"""
+        item = self.__dict__
+        if "_sa_instance_state" in item:
+            del item["_sa_instance_state"]
+        return item
+
+
+class OtherFile(db.Model):
+    __tablename__ = 'otherfiles'  # 指定对应数据库表studentcourse
+
+    studentID = db.Column(db.VARCHAR(13), primary_key=True)  # 学号
+    path = db.Column(db.VARCHAR(255), primary_key=True)  # 成绩单图片地址
+
+    def __init__(self, studentID, path):
+        """初始化StudentUser"""
+        self.studentID = studentID
+        self.path = path
+
+    def __repr__(self):
+        return '<cname %r>' % self.path
+
+    def to_json(self):
+        """将实例对象转化为json"""
+        item = self.__dict__
+        if "_sa_instance_state" in item:
+            del item["_sa_instance_state"]
+        return item
+
+
+class Speciality(db.Model):
+    __tablename__ = 'specialities'  # 指定对应数据库表studentcourse
+
+    studentID = db.Column(db.VARCHAR(13), primary_key=True)  # 学号
+    path = db.Column(db.VARCHAR(255), primary_key=True)  # 图片地址
+
+    def __init__(self, studentID, path):
+        """初始化StudentUser"""
+        self.studentID = studentID
+        self.path = path
+
+    def __repr__(self):
+        return '<cname %r>' % self.path
 
     def to_json(self):
         """将实例对象转化为json"""

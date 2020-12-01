@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from flask import Flask, session
 import os
 from datetime import timedelta
@@ -7,8 +8,7 @@ from model.DBUtil import db
 
 app = Flask(__name__)
 
-
-@app.route('/')
+@app.route('/test')
 def hello_world():
     return 'Hello World!'
 
@@ -21,7 +21,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db.init_app(app)
 app.config['SECRET_KEY'] = 'sessionKEY123'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # 设置session的保存时间。
-
 app.register_blueprint(student, url_prefix='/student')
 app.register_blueprint(admin, url_prefix='/admin')
 
