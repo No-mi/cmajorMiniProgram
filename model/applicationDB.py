@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # from model.modelDB import Application
 from sqlalchemy import or_
 from .modelDB import *
