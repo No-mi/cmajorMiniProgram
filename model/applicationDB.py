@@ -21,8 +21,8 @@ def insertApplicqtion(openID, name, studentID,phoneNumber , institute, major, gr
     """插入一个申请表信息"""
     application = Application(openID=openID, name=name, studentID=studentID, phoneNumber=phoneNumber,institute=institute,
                               major=major, grade=grade, downGrade=downGrade,choiceAfterGraduating=choiceAfterGraduating,
-                              doctor=doctor, ID=ID, academicRecord=academicRecord,CETRecord=CETRecord,otherFIle=otherFIle,speciality=speciality,
-                              courses=courses,CET=CET, CETScore=CETScore, GPA=GPA)
+                              doctor=doctor, ID=ID, academicRecord=academicRecord,CETRecord=CETRecord,otherFIle=otherFIle,
+                              speciality=speciality,courses=courses,CET=CET, CETScore=CETScore, GPA=GPA)
     db.session.add(application)
     db.session.commit()
 
