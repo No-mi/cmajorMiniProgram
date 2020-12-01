@@ -2,7 +2,8 @@
 
 from flask import Blueprint, request, session
 
-from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, getApplicationByOpenID
+from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, getApplicationByOpenID, deleteOtherFile, \
+    deleteSpecialities, setOtherFiles, setSpecialities
 # from model.couresDB import getCoursesByStudentId
 from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStudenID, updateCourseByStudentID, \
     getCreditStatistic
@@ -66,54 +67,129 @@ def checkSession():
 def setApplication():
     if checkUser("111") is False:
         return 0
-    studentName = request.form.get("studentName")
+    req = json.loads(request.get_data(as_text=True))
+    print('req', req)
+
+    studentName = req.get("name")
     # print("student", studentName)
-    openID = request.form.get("openID")
-    studentID = request.form.get("studentID")
-    institute = request.form.get("institute")
-    major = request.form.get("major")
-    grade = request.form.get("grade")
-    downGrade = int(request.form.get("downGrade"))
+    openID = req.get("openID")
+    studentID = req.get("studentID")
+    institute = req.get("institute")
+    major = req.get("major")
+    grade = req.get("grade")
+    downGrade = int(req.get("downGrade"))
     # print("dwonGrade", downGrade)
-    choiceAfterGraduating = int(request.form.get("choiceAfterGraduating"))
-    doctor = int(request.form.get("doctor"))
-    ID = int(request.form.get("ID"))
-    courses = request.form.get("courses")
-    CET = request.form.get("CET")
-    phoneNumber = request.form.get("phoneNumber")
-    CETScore = request.form.get("CETScore")
-    GPA = request.form.get("GPA")
+    choiceAfterGraduating = int(req.get("choiceAfterGraduating"))
+    doctor = int(req.get("doctor"))
+    ID = int(req.get("ID"))
+    courses = req.get("courses")
+    CET = req.get("CET")
+    CETScore = req.get("CETScore")
+    GPA = req.get("GPA")
+
+    speciality = req.get('speciality')
+    CETRecord = req.get('CETRecord')
+    otherFile = req.get('otherFile')
+    academicRecord = req.get('academicRecord')
+
+    # 设置图片名
+    academicRecord = {"path": 'static/imgs/' + "academicRecord" + studentID + '.png', "img": academicRecord}
+
+    saveImg(academicRecord)
+    academicRecord = academicRecord['path']
+
+    CETRecord = {"path": 'static/imgs/' + "CETRecord" + studentID + '.png', "img": CETRecord}
+    saveImg(CETRecord)
+    CETRecord = CETRecord['path']
+
+    for i in range(len(otherFile)):
+        file = {"path": 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png', "img": otherFile[i]}
+        saveImg(file)
+        otherFile[i] = 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png'
+
+    for i in range(len(speciality)):
+        file = {"path": 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png', "img": speciality[i]}
+        saveImg(file)
+        speciality[i] = 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png'
+
     setCourseByStudentID(courses, studentID)
+
+    setOtherFiles(otherFile, studentID)
+    setSpecialities(speciality, studentID)
+
     insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
-                      ID, courses, CET, CETScore, GPA, phoneNumber)
+                      ID, courses, CET, CETScore, GPA, academicRecord, CETRecord)
     return "OK"
+
 
 @student.route('/updateApplication', methods=['POST'])
 def updateApplication():
-    studentName = request.form.get("studentName")
-    print("student", studentName)
-    openID = request.form.get("openID")
-    studentID = request.form.get("studentID")
-    institute = request.form.get("institute")
-    major = request.form.get("major")
-    downGrade = int(request.form.get("downGrade"))
-    grade = request.form.get("grade")
-    print("dwonGrade", downGrade)
-    choiceAfterGraduating = int(request.form.get("choiceAfterGraduating"))
-    doctor = int(request.form.get("doctor"))
-    ID = int(request.form.get("ID"))
-    courses = request.form.get("courses")
-    phoneNumber = request.form.get("phoneNumber")
-    CET = request.form.get("CET")
-    CETScore = request.form.get("CETScore")
-    GPA = request.form.get("GPA")
-    print("studentID", studentID)
-    print("getCourses (UPdate", courses)
-    updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade,
-                              choiceAfterGraduating, doctor, ID, courses, CET, CETScore, GPA, phoneNumber)
-    updateCourseByStudentID(courses, studentID)
-    return getApplicationByOpenID(openID).to_json()
+    req = json.loads(request.get_data(as_text=True))
+    print('req', req)
 
+    studentName = req.get("name")
+    # print("student", studentName)
+    openID = req.get("openID")
+    studentID = req.get("studentID")
+    institute = req.get("institute")
+    major = req.get("major")
+    grade = req.get("grade")
+    downGrade = int(req.get("downGrade"))
+    # print("dwonGrade", downGrade)
+    choiceAfterGraduating = int(req.get("choiceAfterGraduating"))
+    doctor = int(req.get("doctor"))
+    ID = int(req.get("ID"))
+    courses = req.get("courses")
+    CET = req.get("CET")
+    CETScore = req.get("CETScore")
+    GPA = req.get("GPA")
+
+    speciality = req.get('speciality')
+    CETRecord = req.get('CETRecord')
+    otherFile = req.get('otherFile')
+    academicRecord = req.get('academicRecord')
+
+    # 设置图片名
+    academicRecord = {"path": 'static/imgs/' + "academicRecord" + studentID + '.png', "img": academicRecord}
+
+    saveImg(academicRecord)
+    academicRecord = academicRecord['path']
+
+    CETRecord = {"path": 'static/imgs/' + "CETRecord" + studentID + '.png', "img": CETRecord}
+    saveImg(CETRecord)
+    CETRecord = CETRecord['path']
+
+    for i in range(len(otherFile)):
+        file = {"path": 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png', "img": otherFile[i]}
+        saveImg(file)
+        otherFile[i] = 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png'
+
+    for i in range(len(speciality)):
+        file = {"path": 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png', "img": speciality[i]}
+        saveImg(file)
+        speciality[i] = 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png'
+
+    # setCourseByStudentID(courses, studentID)
+    #
+    # setOtherFiles(otherFile,studentID)
+    # setSpecialities(speciality,studentID)
+    #
+    #
+    #
+    # insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
+    #                   ID, courses, CET, CETScore, GPA,academicRecord,CETRecord)
+    #
+    updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
+                              doctor,
+                              ID, courses, CET, CETScore, GPA, academicRecord, CETRecord)
+    updateCourseByStudentID(courses, studentID)
+
+    deleteOtherFile(studentID)
+    deleteSpecialities(studentID)
+    setOtherFiles(otherFile, studentID)
+    setSpecialities(speciality, studentID)
+
+    return getApplicationByOpenID(openID).to_json()
 
 @student.route('/getApplicationByOpenID', methods=['GET'])
 def getAppli():
