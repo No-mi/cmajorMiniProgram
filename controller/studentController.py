@@ -6,6 +6,7 @@ from flask import Blueprint, request, session
 from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, getApplicationByOpenID, deleteOtherFile, \
     deleteSpecialities, setOtherFiles, setSpecialities, getSpecialties, getOtherFilesByStudentId, ApplicationTransfor
 # from model.couresDB import getCoursesByStudentId
+from model.couresDB import getAllCourses
 from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStudenID, updateCourseByStudentID, \
     getCreditStatistic
 from model.studentDB import getStudentUserByUserName, insertStudent, deleteStudent, updateStudentInfo
@@ -25,15 +26,21 @@ def getStudentInfo():
 @student.route('/insertStudentUser', methods=['GET'])
 def insertStudentUser():
     username=request.args['username']
-    student_id=request.args['student_id']
-    insertStudent(username,student_id)
+    student_id = request.args['student_id']
+    insertStudent(username, student_id)
     return "OK"
 
-@student.route('/deleteStudentUser',methods=['GET'])
+
+@student.route('/deleteStudentUser', methods=['GET'])
 def deleteStudentUser():
-    student_id=request.args['student_id']
+    student_id = request.args['student_id']
     deleteStudent(student_id)
     return "OK"
+
+
+@student.route('/getAllCourses')
+def getCourses():
+    return json.dumps(getAllCourses())
 
 
 @student.route('/updateStudentInfo', methods=['GET'])
