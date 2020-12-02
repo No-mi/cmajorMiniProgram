@@ -30,18 +30,15 @@ def insertStudentUser():
     insertStudent(username, student_id)
     return "OK"
 
-
 @student.route('/deleteStudentUser', methods=['GET'])
 def deleteStudentUser():
     student_id = request.args['student_id']
     deleteStudent(student_id)
     return "OK"
 
-
 @student.route('/getAllCourses')
 def getCourses():
     return json.dumps(getAllCourses())
-
 
 @student.route('/updateStudentInfo', methods=['GET'])
 def updateStudentUserInfo():
