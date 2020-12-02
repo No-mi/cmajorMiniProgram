@@ -20,10 +20,7 @@ def getApplicationByOpenID(openID):
     application.courses = getPassedCoursesByStudenID(application.studentID)
     application.otherFiles = getOtherFilesByStudentId(application.studentID)
     application.specialities = getSpecialties(application.studentID)
-    if application.CETRecord is not None:
-        application.CETRecord = readImg(application.CETRecord)
-    if application.academicRecord is not None:
-        application.academicRecord = readImg(application.academicRecord)
+
     return application
 
 
@@ -60,8 +57,6 @@ def getAllApplication():
         application.courses = getPassedCoursesByStudenID(application.studentID)
         application.otherFiles = getOtherFilesByStudentId(application.studentID)
         application.specialities = getSpecialties(application.studentID)
-        application.CETRecord = readImg(application.CETRecord)
-        application.academicRecord = readImg(application.academicRecord)
     print("len", len(applications))
     return applications
 
@@ -75,13 +70,24 @@ def getPassedCoursesByStudenID(studentID):
 
 def getOtherFilesByStudentId(studentId):
     res = OtherFile.query.filter_by(studentID=studentId)
-    otherFile = list(map(lambda x: readImg(x.path), res))
+    otherFile = list(map(lambda x: x.path, res))
     return otherFile
+
+
+def ApplicationTransfor(application):
+    resJson = application.to_json()
+    resJson.update({'otherFiles': list(map(lambda x: readImg(x), application.otherFiles))})
+    resJson.update({'specialities': list(map(lambda x: readImg(x), application.specialities))})
+    if application.CETRecord is not None:
+        resJson.update({'CETRecord': readImg(application.CETRecord)})
+    if application.academicRecord is not None:
+        resJson.update({'academicRecord': readImg(application.academicRecord)})
+    return resJson
 
 
 def getSpecialties(studentID):
     res = Speciality.query.filter_by(studentID=studentID)
-    specialities = list(map(lambda x: readImg(x.path), res))
+    specialities = list(map(lambda x: x.path, res))
     return specialities
 
 

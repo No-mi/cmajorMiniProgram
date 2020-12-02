@@ -4,14 +4,14 @@ import json
 from flask import Blueprint, request, session
 
 from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, getApplicationByOpenID, deleteOtherFile, \
-    deleteSpecialities, setOtherFiles, setSpecialities, getSpecialties, getOtherFilesByStudentId
+    deleteSpecialities, setOtherFiles, setSpecialities, getSpecialties, getOtherFilesByStudentId, ApplicationTransfor
 # from model.couresDB import getCoursesByStudentId
 from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStudenID, updateCourseByStudentID, \
     getCreditStatistic
 from model.studentDB import getStudentUserByUserName, insertStudent, deleteStudent, updateStudentInfo
 from model.modelDB import StudentUser
 from server.studentServer import checkUser
-from until.fileUtil import saveImg
+from until.fileUtil import saveImg, readImg
 
 student = Blueprint("student", __name__)  # 实例化student蓝图
 
@@ -187,7 +187,8 @@ def updateApplication():
 @student.route('/getApplicationByOpenID', methods=['GET'])
 def getAppli():
     openID = request.args.get("openID")
-    return getApplicationByOpenID(openID).to_json()
+    application = getApplicationByOpenID(openID)
+    return ApplicationTransfor(application)
 
 
 @student.route('/login', methods=['GET'])
