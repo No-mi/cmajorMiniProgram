@@ -1,15 +1,17 @@
 # -*- coding: UTF-8 -*-
+import json
 
 from flask import Blueprint, request, session
 
 from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, getApplicationByOpenID, deleteOtherFile, \
-    deleteSpecialities, setOtherFiles, setSpecialities
+    deleteSpecialities, setOtherFiles, setSpecialities, getSpecialties, getOtherFilesByStudentId
 # from model.couresDB import getCoursesByStudentId
 from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStudenID, updateCourseByStudentID, \
     getCreditStatistic
 from model.studentDB import getStudentUserByUserName, insertStudent, deleteStudent, updateStudentInfo
 from model.modelDB import StudentUser
 from server.studentServer import checkUser
+from until.fileUtil import saveImg
 
 student = Blueprint("student", __name__)  # 实例化student蓝图
 
@@ -60,7 +62,6 @@ def setSession():
 def checkSession():
     return session.get('username')
 
-
 # openID=ooo&studentName=courseTest&studentID2018141531004&institute=wangan&major=wangan&grade=2018&downGrade=1&choiceAfterGraduating=1&doctor=1&ID=341602200008087181&courses=["107032030","10711500"]
 
 @student.route('/setApplication', methods=['POST'])
@@ -91,7 +92,7 @@ def setApplication():
     CETRecord = req.get('CETRecord')
     otherFile = req.get('otherFile')
     academicRecord = req.get('academicRecord')
-
+    phoneNumber = req.get('phoneNumber')
     # 设置图片名
     academicRecord = {"path": 'static/imgs/' + "academicRecord" + studentID + '.png', "img": academicRecord}
 
@@ -101,16 +102,17 @@ def setApplication():
     CETRecord = {"path": 'static/imgs/' + "CETRecord" + studentID + '.png', "img": CETRecord}
     saveImg(CETRecord)
     CETRecord = CETRecord['path']
-
-    for i in range(len(otherFile)):
-        file = {"path": 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png', "img": otherFile[i]}
-        saveImg(file)
-        otherFile[i] = 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png'
-
-    for i in range(len(speciality)):
-        file = {"path": 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png', "img": speciality[i]}
-        saveImg(file)
-        speciality[i] = 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png'
+    if otherFile is None:
+        for i in range(len(otherFile)):
+            file = {"path": 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png', "img": otherFile[i]}
+            saveImg(file)
+            otherFile[i] = 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png'
+    if speciality is None:
+        for i in range(len(speciality)):
+            file = {"path": 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png',
+                    "img": speciality[i]}
+            saveImg(file)
+            speciality[i] = 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png'
 
     setCourseByStudentID(courses, studentID)
 
@@ -118,9 +120,9 @@ def setApplication():
     setSpecialities(speciality, studentID)
 
     insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
-                      ID, courses, CET, CETScore, GPA, academicRecord, CETRecord)
+                      ID,
+                      CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
     return "OK"
-
 
 @student.route('/updateApplication', methods=['POST'])
 def updateApplication():
@@ -143,6 +145,7 @@ def updateApplication():
     CET = req.get("CET")
     CETScore = req.get("CETScore")
     GPA = req.get("GPA")
+    phoneNumber = req.get("phoneNumber")
 
     speciality = req.get('speciality')
     CETRecord = req.get('CETRecord')
@@ -158,7 +161,6 @@ def updateApplication():
     CETRecord = {"path": 'static/imgs/' + "CETRecord" + studentID + '.png', "img": CETRecord}
     saveImg(CETRecord)
     CETRecord = CETRecord['path']
-
     for i in range(len(otherFile)):
         file = {"path": 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png', "img": otherFile[i]}
         saveImg(file)
@@ -169,19 +171,9 @@ def updateApplication():
         saveImg(file)
         speciality[i] = 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png'
 
-    # setCourseByStudentID(courses, studentID)
-    #
-    # setOtherFiles(otherFile,studentID)
-    # setSpecialities(speciality,studentID)
-    #
-    #
-    #
-    # insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
-    #                   ID, courses, CET, CETScore, GPA,academicRecord,CETRecord)
-    #
     updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
-                              doctor,
-                              ID, courses, CET, CETScore, GPA, academicRecord, CETRecord)
+                              doctor, ID,
+                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
     updateCourseByStudentID(courses, studentID)
 
     deleteOtherFile(studentID)
@@ -191,21 +183,24 @@ def updateApplication():
 
     return getApplicationByOpenID(openID).to_json()
 
+
 @student.route('/getApplicationByOpenID', methods=['GET'])
 def getAppli():
     openID = request.args.get("openID")
     return getApplicationByOpenID(openID).to_json()
 
+
 @student.route('/login', methods=['GET'])
 def login():
     code = request.args['code']
 
-
-@student.route('/getApplication', methods=['GET'])
-def getApplication():
-    openID = request.args.get("openID")
-    appli = getApplicationByOpenID(openID)
-    appli.courses = getPassedCoursesByStudenID(appli.studentId)
-    return appli.to_json()
+# @student.route('/getApplication', methods=['GET'])
+# def getApplication():
+#     openID = request.args.get("openID")
+#     appli = getApplicationByOpenID(openID)
+#     appli.courses = getPassedCoursesByStudenID(appli.studentID)
+#     appli.otherFiles=getOtherFilesByStudentId(appli.studentID)
+#     appli.specialities=getSpecialties(appli.studentID)
+#     return appli.to_json()
 
 # openID=099&studentName=courseTest&studentID=2018141518751&institute=网安&major=网安&grade=2018&downGrade=1&choiceAfterGraduating=1&grade=2018&doctor=1&ID=341602200008087191&courses=["107032030","107115000","105366020","105367010","888004010","900001010","314030020","912002010","201080030","201137050"]&CET=1&CETScore=450&GPA=3.7

@@ -61,15 +61,17 @@ class Application(db.Model):
     ID = db.Column(db.VARCHAR(18))  # 身份证号
     academicRecord = db.Column(db.VARCHAR(40))  # 成绩单图片地址
     CETRecord = db.Column(db.VARCHAR(100))  # 四六级成绩单图片地址
-    otherFIle = db.Column(db.VARCHAR(100))  # 其他证明材料地址，若无则为0
-    speciality = db.Column(db.VARCHAR(100))  # 不满足申报条件但是有特长的证明材料图片地址，若无则为0
+    # otherFIle = db.Column(db.VARCHAR(100))  # 其他证明材料地址，若无则为0
+    # speciality = db.Column(db.VARCHAR(100))  # 不满足申报条件但是有特长的证明材料图片地址，若无则为0
     CET = db.Column(db.Integer)  # 上传的成绩 0：四级 1：六级
     CETScore = db.Column(db.Integer)  # 四六级成绩
     GPA = db.Column(db.Float)  # 绩点
     courses = []  # 已修读课程列表
+    otherFiles = []
+    specialities = []
 
     def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
-                 CET, CETScore, GPA, phoneNumber):
+                 CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord):
         """初始化application"""
         self.openID = openID
         self.name = name
@@ -85,6 +87,8 @@ class Application(db.Model):
         self.CET = CET
         self.CETScore = CETScore
         self.GPA = GPA
+        self.academicRecord = academicRecord
+        self.CETRecord = CETRecord
 
     def __repr__(self):
         return '<openID %r>' % self.openID
