@@ -11,7 +11,7 @@ from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStuden
 from model.studentDB import getStudentUserByUserName, insertStudent, deleteStudent, updateStudentInfo
 from model.modelDB import StudentUser
 from server.studentServer import checkUser
-from until.fileUtil import saveImg, readImg
+from until.fileUtil import saveImg
 
 student = Blueprint("student", __name__)  # 实例化student蓝图
 

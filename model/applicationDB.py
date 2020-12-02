@@ -2,7 +2,6 @@
 # from model.modelDB import Application
 from sqlalchemy import or_
 
-from until.fileUtil import readImg
 from .modelDB import *
 from .studentCourseDB import getPassedCoursesByStudenID, getCreditStatistic
 
@@ -76,12 +75,6 @@ def getOtherFilesByStudentId(studentId):
 
 def ApplicationTransfor(application):
     resJson = application.to_json()
-    resJson.update({'otherFiles': list(map(lambda x: readImg(x), application.otherFiles))})
-    resJson.update({'specialities': list(map(lambda x: readImg(x), application.specialities))})
-    if application.CETRecord is not None:
-        resJson.update({'CETRecord': readImg(application.CETRecord)})
-    if application.academicRecord is not None:
-        resJson.update({'academicRecord': readImg(application.academicRecord)})
     return resJson
 
 
