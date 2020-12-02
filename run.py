@@ -13,10 +13,17 @@ def hello_world():
     return 'Hello World!'
 
 
-@app.route("/downloadPDF", methods=['GET'])
+@app.route("/download", methods=['GET'])
 def index():
-    filename = request.args.get('filename')
-    return send_from_directory(r"static/PDF", filename=filename, as_attachment=True)
+    filepath = request.args.get('filepath')
+    l = filepath.split("/")
+    path = ""
+    if (len(l) != 1):
+        for i in range(len(l) - 2):
+            path = path + l[i] + "/"
+        path = path + l[-2]
+    filename = l[-1]
+    return send_from_directory(path, filename, as_attachment=True)
 
 # 配置数据库
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:eroch123@112.126.102.75:3306/cmajorminiProgram'  # 指定数据库地址、用户名、密码
@@ -30,4 +37,4 @@ app.register_blueprint(student, url_prefix='/student')
 app.register_blueprint(admin, url_prefix='/admin')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="127.0.0.1", port=5000)
