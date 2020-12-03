@@ -5,6 +5,7 @@ from datetime import timedelta
 from controller.studentController import student
 from controller.adminController import admin
 from model.DBUtil import db
+from server.adminServer import application2pdf
 
 app = Flask(__name__)
 
@@ -25,6 +26,13 @@ def index():
     filename = l[-1]
     return send_from_directory(path, filename, as_attachment=True)
 
+
+@student.route('localhost:5000/application2pdf', methods=['GET'])
+def application_pdf():
+    openID=request.args.get("openID")
+    return application2pdf(openID)
+
+
 # 配置数据库
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:eroch123@112.126.102.75:3306/cmajorminiProgram'  # 指定数据库地址、用户名、密码
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
@@ -37,4 +45,4 @@ app.register_blueprint(student, url_prefix='/student')
 app.register_blueprint(admin, url_prefix='/admin')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="127.0.0.1", port=5000)

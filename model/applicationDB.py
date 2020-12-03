@@ -86,6 +86,7 @@ def getSpecialties(studentID):
 
 def getSexStatistic():
     res = list(Application.query.all())
+    #身份证号码的第十七位判断性别,如果为奇数则为男性,偶数则为女性
     resC = list(map(lambda x: int(x.ID[16:17]) % 2, res))
     return {"male": resC.count(1), "female": resC.count(0)}
 

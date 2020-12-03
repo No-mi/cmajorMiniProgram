@@ -199,6 +199,8 @@ def getAppli():
 def login():
     code = request.args['code']
 
+
+
 # @student.route('/getApplication', methods=['GET'])
 # def getApplication():
 #     openID = request.args.get("openID")

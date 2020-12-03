@@ -82,6 +82,13 @@ def application2pdf(openID):
     story.append(table)
 
     # file
-    doc = SimpleDocTemplate('/pdfs/application.pdf')
-    doc.build(story)
-    return doc
+    try:
+        doc = SimpleDocTemplate('/pdfs/application_'+str(openID)+'.pdf')
+        doc.build(story)
+    except Exception as e:
+        print('application2pdf failed')
+        return False
+    print('application2pdf successed')
+    return True
+#保险起见，给varchar或text赋值时一定要带上单引号！
+application2pdf('111')
