@@ -8,4 +8,4 @@ from model.modelDB import Course
 #     return list(map(lambda x: x.cId, courses))
 def getAllCourses():
     res = Course.query.all()
-    return list(map(lambda x: x.cId, res))
+    return list(map(lambda x: {"cId": x.cId, "cname": x.cname}, res))

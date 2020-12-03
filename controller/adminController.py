@@ -4,7 +4,7 @@ import json
 from flask import Blueprint
 
 from model.applicationDB import getAllApplication, getGradeStatistic, getMajorStatistic, getSexStatistic, \
-    getStatisticData
+    getStatisticData, ApplicationTransfor
 from model.studentCourseDB import getPassedCoursesByStudenID, getCreditStatistic
 
 admin = Blueprint("admin", __name__)  # 实例化teacher蓝图
@@ -13,7 +13,7 @@ admin = Blueprint("admin", __name__)  # 实例化teacher蓝图
 @admin.route('/getAllApplication')
 def getApplications():
     applications = getAllApplication()
-    return json.dumps(list(map(lambda x: x.to_json(), applications)))
+    return json.dumps(list(map(lambda x: ApplicationTransfor(x), applications)))
 
 
 @admin.route('/getStatisticData')

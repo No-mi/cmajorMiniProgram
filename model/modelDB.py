@@ -54,22 +54,22 @@ class Application(db.Model):
     phoneNumber = db.Column(db.VARCHAR(11))  # 电话号码
     institute = db.Column(db.VARCHAR(20))  # 原学院
     major = db.Column(db.VARCHAR(20))  # 原专业
-    downGrade = db.Column(db.Integer)  # 是否同意降级 0：不同意 1：同一
+    downGrade = db.Column(db.Integer)  # 是否同意降级 0：是 1：否
     grade = db.Column(db.VARCHAR(4))  # 年级
-    choiceAfterGraduating = db.Column(db.Integer)  # 毕业后选择
-    doctor = db.Column(db.Integer)  # 是否打算读博
+    choiceAfterGraduating = db.Column(db.Integer)  # 毕业后选择 0：国外深造 1：国内读研 2：就业 3：待定
+    doctor = db.Column(db.Integer)  # 是否打算读博 1：是  0：否
     ID = db.Column(db.VARCHAR(18))  # 身份证号
     academicRecord = db.Column(db.VARCHAR(40))  # 成绩单图片地址
     CETRecord = db.Column(db.VARCHAR(100))  # 四六级成绩单图片地址
-    otherFIle = db.Column(db.VARCHAR(100))  # 其他证明材料地址，若无则为0
-    speciality = db.Column(db.VARCHAR(100))  # 不满足申报条件但是有特长的证明材料图片地址，若无则为0
     CET = db.Column(db.Integer)  # 上传的成绩 0：四级 1：六级
     CETScore = db.Column(db.Integer)  # 四六级成绩
     GPA = db.Column(db.Float)  # 绩点
     courses = []  # 已修读课程列表
+    otherFiles = []
+    specialities = []
 
     def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
-                 CET, CETScore, GPA, phoneNumber):
+                 CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord):
         """初始化application"""
         self.openID = openID
         self.name = name
@@ -85,7 +85,8 @@ class Application(db.Model):
         self.CET = CET
         self.CETScore = CETScore
         self.GPA = GPA
-        # self.courses=getPassedCoursesByStudenID(self.studentID)
+        self.academicRecord = academicRecord
+        self.CETRecord = CETRecord
 
     def __repr__(self):
         return '<openID %r>' % self.openID
@@ -96,9 +97,6 @@ class Application(db.Model):
         if "_sa_instance_state" in item:
             del item["_sa_instance_state"]
         return item
-
-    # def getCourses(self):
-    #     self.courses = getCoursesByStudentId(self.studentID)
 
 class Course(db.Model):
     __tablename__ = 'courses'  # 指定对应数据库表studentcourse
@@ -127,7 +125,6 @@ class Course(db.Model):
             del item["_sa_instance_state"]
         return item
 
-
 class OtherFile(db.Model):
     __tablename__ = 'otherfiles'  # 指定对应数据库表studentcourse
 
@@ -148,7 +145,6 @@ class OtherFile(db.Model):
         if "_sa_instance_state" in item:
             del item["_sa_instance_state"]
         return item
-
 
 class Speciality(db.Model):
     __tablename__ = 'specialities'  # 指定对应数据库表studentcourse
