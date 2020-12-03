@@ -1,22 +1,34 @@
-# import tempfile
-from reportlab.lib import colors
-from reportlab.pdfbase import pdfmetrics
-# from reportlab.pdfbase.pdfmetrics import registerFontFamily
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Table
-# from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, LongTable, Image
-from reportlab.lib.styles import getSampleStyleSheet
-# from reportlab.lib.enums import TA_JUSTIFY
-# from io import BytesIO
-
-from model.applicationDB import *
-# 获取申请表信息
-# application = getApplicationByOpenID(Application.openID)
+# # import tempfile
+# from reportlab.lib import colors
+# from reportlab.pdfbase import pdfmetrics
+# # from reportlab.pdfbase.pdfmetrics import registerFontFamily
+# from reportlab.pdfbase.ttfonts import TTFont
+# from reportlab.platypus import Paragraph, SimpleDocTemplate, Table
+# # from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, LongTable, Image
+# from reportlab.lib.styles import getSampleStyleSheet
+# # from reportlab.lib.enums import TA_JUSTIFY
+# # from io import BytesIO
+#
+# from model.applicationDB import getApplicationByOpenID
+# # 获取申请表信息
+# # application = getApplicationByOpenID(Application.openID)
 
 def application2pdf(openID):
     """:cvar
     根据传入的openID,把相应的申请表的信息生成一张pdf，然后返回pdf
     """
+    # import tempfile
+    from reportlab.lib import colors
+    from reportlab.pdfbase import pdfmetrics
+    # from reportlab.pdfbase.pdfmetrics import registerFontFamily
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.platypus import Paragraph, SimpleDocTemplate, Table
+    # from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, LongTable, Image
+    from reportlab.lib.styles import getSampleStyleSheet
+    # from reportlab.lib.enums import TA_JUSTIFY
+    # from io import BytesIO
+
+    from model.applicationDB import getApplicationByOpenID
     # 获取申请表信息
     application = getApplicationByOpenID(openID)
     pdfmetrics.registerFont(TTFont('SimSun', './SimSun.ttf'))  # 默认不支持中文，需要注册字体

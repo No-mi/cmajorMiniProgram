@@ -5,7 +5,7 @@ from datetime import timedelta
 from controller.studentController import student
 from controller.adminController import admin
 from model.DBUtil import db
-from server.adminServer import application2pdf
+# from server.adminServer import application2pdf
 
 app = Flask(__name__)
 
@@ -26,11 +26,10 @@ def index():
     filename = l[-1]
     return send_from_directory(path, filename, as_attachment=True)
 
-
-@student.route('localhost:5000/application2pdf', methods=['GET'])
-def application_pdf():
-    openID=request.args.get("openID")
-    return application2pdf(openID)
+# @app.route('localhost:5000/application2pdf', methods=['GET','POST'])
+# def application_pdf():
+#     openID=request.args.get("openID")
+#     return application2pdf(openID)
 
 
 # 配置数据库
