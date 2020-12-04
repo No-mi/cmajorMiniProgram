@@ -103,4 +103,4 @@ def application2pdf(openID):
     print('application2pdf successed')
     return True
 #保险起见，给varchar或text赋值时一定要带上单引号！
-application2pdf('111')
+# application2pdf('111')
