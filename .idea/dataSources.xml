@@ -7,11 +7,11 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/demo</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="@112.126.102.75" uuid="ef5a7714-8af3-4d3f-a3a7-2f6f298e39c3">
-      <driver-ref>mysql</driver-ref>
+    <data-source source="LOCAL" name="@112.126.102.75" uuid="44c45c28-5dde-4fe0-8ff0-87d855968b0e">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://112.126.102.75:3306/cmajorminiProgram</jdbc-url>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://112.126.102.75:3306</jdbc-url>
     </data-source>
   </component>
 </project>

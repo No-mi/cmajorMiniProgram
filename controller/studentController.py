@@ -193,6 +193,8 @@ def c():
     return decrypt(openIDen)
 
 
+
+
 # @student.route('/getApplication', methods=['GET'])
 # def getApplication():
 #     openID = request.args.get("openID")
