@@ -16,10 +16,11 @@ def getApplicationByIdName(name, openID, studentId):
 def getApplicationByOpenID(openID):
     """根据姓名/微信编号/学号查询申请表信息"""
     application = Application.query.filter_by(openID=openID).first()
-    application.courses = getPassedCoursesByStudenID(application.studentID)
-    application.otherFiles = getOtherFilesByStudentId(application.studentID)
-    application.specialities = getSpecialties(application.studentID)
-
+    if application:
+        application.courses = getPassedCoursesByStudenID(application.studentID)
+        application.otherFiles = getOtherFilesByStudentId(application.studentID)
+        application.specialities = getSpecialties(application.studentID)
+        return application
     return application
 
 
@@ -74,8 +75,10 @@ def getOtherFilesByStudentId(studentId):
 
 
 def ApplicationTransfor(application):
-    resJson = application.to_json()
-    return resJson
+    if (application):
+        resJson = application.to_json()
+        return resJson
+    return application
 
 
 def getSpecialties(studentID):

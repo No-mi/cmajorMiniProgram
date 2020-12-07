@@ -66,6 +66,7 @@ def getPassedCoursesByStudenID(studentID):
 def updateCourseByStudentID(courses, studentID):
     coursesAll = getAllCourses()
     print("courses", courses)
+    print(studentID)
     for course in coursesAll:
         if course in courses:
             StudentCourse.query.filter_by(cId=course, studentId=studentID).update({'havePassed': 1})
