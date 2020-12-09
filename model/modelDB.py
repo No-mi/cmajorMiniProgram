@@ -69,7 +69,7 @@ class Application(db.Model):
     specialities = []
 
     def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
-                 CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord):
+                 CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen):
         """初始化application"""
         self.openID = openID
         self.name = name
@@ -87,6 +87,7 @@ class Application(db.Model):
         self.GPA = GPA
         self.academicRecord = academicRecord
         self.CETRecord = CETRecord
+        self.specialities = specialitylen
 
     def __repr__(self):
         return '<openID %r>' % self.openID

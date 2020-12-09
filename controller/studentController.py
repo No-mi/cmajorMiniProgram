@@ -100,6 +100,10 @@ def setApplication():
     academicRecord = req.get('academicRecord')
     phoneNumber = req.get('phoneNumber')
     # academicRecord = 'static/academicRecord/' + "academicRecord" + studentID + '.pdf'
+    if (speciality is None):
+        specialitylen = 0
+    else:
+        specialitylen = len(speciality)
 
     setCourseByStudentID(courses, studentID)
 
@@ -108,7 +112,7 @@ def setApplication():
 
     insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
                       ID,
-                      CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
+                      CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen)
     return "OK"
 
 
@@ -163,10 +167,15 @@ def updateApplication():
     #                 "img": speciality[i]}
     #         # saveImg(file)
     #         speciality[i] = 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png'
+    # if(!academicRecord)
+    if (speciality is None):
+        specialitylen = 0
+    else:
+        specialitylen = len(speciality)
 
     updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
-                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
+                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen)
     delCourseByStudentID(studentID)
     setCourseByStudentID(courses, studentID)
     deleteOtherFile(studentID)

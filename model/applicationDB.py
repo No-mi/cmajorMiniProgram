@@ -26,11 +26,11 @@ def getApplicationByOpenID(openID):
 
 def insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
                       ID,
-                      CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord):
+                      CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen):
     """插入一个申请表信息"""
     application = Application(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
-                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
+                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen)
     db.session.add(application)
     db.session.commit()
 
@@ -41,14 +41,14 @@ def deleteApplication(name, openID, studentId):
 
 def updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
-                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord):
+                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, speciality):
     """修改指定姓名用户的姓名"""
     Application.query.filter_by(openID=openID).update(
         {'name': studentName, 'studentID': studentID, 'phoneNumber': phoneNumber, 'institute': institute,
          'major': major, 'grade': grade,
          'downGrade': downGrade, 'choiceAfterGraduating': choiceAfterGraduating, 'doctor': doctor, 'ID': ID,
          'academicRecord': academicRecord,
-         'CETRecord': CETRecord, 'CET': CET, 'CETScore': CETScore, 'GPA': GPA})
+         'CETRecord': CETRecord, 'CET': CET, 'CETScore': CETScore, 'GPA': GPA, 'speciality': speciality})
 
 def getAllApplication():
     """获取所有申请信息"""
