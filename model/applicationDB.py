@@ -106,6 +106,7 @@ def getTotalStudent():
     return len(Application.query.all())
 
 def setOtherFiles(otherFiles, studentID):
+    print(otherFiles)
     for file in otherFiles:
         print('insert', file)
         otherfile = OtherFile(studentID, file)

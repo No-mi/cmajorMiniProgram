@@ -43,15 +43,18 @@ def updateStudentCourse(cID, havePassed, studentId):
 
 def setCourseByStudentID(courses, studentID):
     coursesAll = getAllCourses()
-    print("setCourse调用", coursesAll)
+    print("setCourse调用", coursesAll, courses)
     for course in coursesAll:
-        if course in courses:
+        if course['cId'] in courses:
             print(studentID)
-            studentCourse = StudentCourse(cId=course, havePassed=1, studentId=studentID)
+            print(course['cId'])
+            studentCourse = StudentCourse(cId=course['cId'], havePassed=1, studentId=studentID)
             db.session.add(studentCourse)
             db.session.commit()
         else:
-            studentCourse = StudentCourse(cId=course, havePassed=0, studentId=studentID)
+            print(studentID)
+            print(course['cId'])
+            studentCourse = StudentCourse(cId=course['cId'], havePassed=0, studentId=studentID)
             db.session.add(studentCourse)
             db.session.commit()
 
@@ -63,15 +66,15 @@ def getPassedCoursesByStudenID(studentID):
     return courses
 
 
-def updateCourseByStudentID(courses, studentID):
-    coursesAll = getAllCourses()
-    print("courses", courses)
-    print(studentID)
-    for course in coursesAll:
-        if course in courses:
-            StudentCourse.query.filter_by(cId=course, studentId=studentID).update({'havePassed': 1})
-        else:
-            StudentCourse.query.filter_by(cId=course, studentId=studentID).update({'havePassed': 0})
+# def updateCourseByStudentID(courses, studentID):
+#     coursesAll = getAllCourses()
+#     print("courses", courses)
+#     print(studentID)
+#     for course in coursesAll:
+#         if course in courses:
+#             StudentCourse.query.filter_by(cId=course, studentId=studentID).update({'havePassed': 1})
+#         else:
+#             StudentCourse.query.filter_by(cId=course, studentId=studentID).update({'havePassed': 0})
 
 
 def getCreditStatistic():
@@ -91,6 +94,9 @@ def getCreditStatistic():
             res[3] = res[3] + 1
     return res
 
+
+def delCourseByStudentID(studentId):
+    StudentCourse.query.filter_by(studentId=studentId).delete()
     # resP = list(map(lambda x: (int((int(x.creditSum) // (totalCredit * 0.7)))), result))
     # print(resP)
     # return {'pass': resP.count(1), "NotPass": resP.count(0)}

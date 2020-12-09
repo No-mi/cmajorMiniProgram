@@ -59,8 +59,8 @@ class Application(db.Model):
     choiceAfterGraduating = db.Column(db.Integer)  # 毕业后选择 0：国外深造 1：国内读研 2：就业 3：待定
     doctor = db.Column(db.Integer)  # 是否打算读博 1：是  0：否
     ID = db.Column(db.VARCHAR(18))  # 身份证号
-    academicRecord = db.Column(db.VARCHAR(40))  # 成绩单图片地址
-    CETRecord = db.Column(db.VARCHAR(100))  # 四六级成绩单图片地址
+    academicRecord = db.Column(db.VARCHAR(200))  # 成绩单图片地址
+    CETRecord = db.Column(db.VARCHAR(200))  # 四六级成绩单图片地址
     CET = db.Column(db.Integer)  # 上传的成绩 0：四级 1：六级
     CETScore = db.Column(db.Integer)  # 四六级成绩
     GPA = db.Column(db.Float)  # 绩点

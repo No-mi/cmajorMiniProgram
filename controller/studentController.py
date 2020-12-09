@@ -7,8 +7,8 @@ from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, ge
     deleteSpecialities, setOtherFiles, setSpecialities, getSpecialties, getOtherFilesByStudentId, ApplicationTransfor
 # from model.couresDB import getCoursesByStudentId
 from model.couresDB import getAllCourses
-from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStudenID, updateCourseByStudentID, \
-    getCreditStatistic
+from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStudenID, \
+    getCreditStatistic, delCourseByStudentID
 from model.studentDB import getStudentUserByUserName, insertStudent, deleteStudent, updateStudentInfo
 from model.modelDB import StudentUser
 from server.studentServer import checkUser, onLogin, decrypt, getExcel, outputdir
@@ -45,13 +45,11 @@ def updateStudentUserInfo():
     updateStudentInfo(student_id, username)
     return "OK"
 
-
 # @student.route('/getPassedCourseByStudentID', methods=['GET'])
 # def getCourse():
 #     student_id = request.args['student_id']
 #     # courses = getCoursesByStudentId(student_id)
 #     return json.dumps(list(map(lambda x: x.cId, courses)))
-
 
 @student.route('/setSession', methods=['GET'])
 def setSession():
@@ -74,30 +72,28 @@ def setApplication():
     print('req', req)
 
     studentName = req.get("name")
-    # print("student", studentName)
     openID = decrypt(req.get("openID"))
     studentID = req.get("studentID")
     institute = req.get("institute")
     major = req.get("major")
     grade = req.get("grade")
-    downGrade = int(req.get("downGrade"))
-    # print("dwonGrade", downGrade)
-    choiceAfterGraduating = int(req.get("choiceAfterGraduating"))
-    doctor = int(req.get("doctor"))
+    downGrade = req.get("downGrade")
+    choiceAfterGraduating = req.get("choiceAfterGraduating")
+    doctor = req.get("doctor")
     ID = req.get("ID")
     courses = req.get("courses")
     CET = req.get("CET")
     CETScore = req.get("CETScore")
     GPA = req.get("GPA")
 
-    speciality = req.get('speciality')
+    speciality = req.get('specialities')
     CETRecord = req.get('CETRecord')
-    otherFile = req.get('otherFile')
-    # academicRecord = req.get('academicRecord')
+    otherFile = req.get('otherFiles')
+    academicRecord = req.get('academicRecord')
     phoneNumber = req.get('phoneNumber')
-    academicRecord = 'static/academicRecord/' + "academicRecord" + studentID + '.pdf'
+    # academicRecord = 'static/academicRecord/' + "academicRecord" + studentID + '.pdf'
 
-    # setCourseByStudentID(courses, studentID)
+    setCourseByStudentID(courses, studentID)
 
     setOtherFiles(otherFile, studentID)
     setSpecialities(speciality, studentID)
@@ -120,7 +116,7 @@ def updateApplication():
     institute = req.get("institute")
     major = req.get("major")
     grade = req.get("grade")
-    downGrade = int(req.get("downGrade"))
+    downGrade = req.get("downGrade")
     # print("dwonGrade", downGrade)
     choiceAfterGraduating = int(req.get("choiceAfterGraduating"))
     doctor = int(req.get("doctor"))
@@ -135,14 +131,14 @@ def updateApplication():
     CETRecord = req.get('CETRecord')
     otherFile = req.get('otherFiles')
     print(otherFile)
-    # academicRecord = req.get('academicRecord')
+    academicRecord = req.get('academicRecord')
 
     # 设置图片名
     # academicRecord = {"path": 'static/imgs/' + "academicRecord" + studentID + '.png', "img": academicRecord}
 
     # saveImg(academicRecord)
     # academicRecord = academicRecord['path']
-    academicRecord = 'static/academicRecord/' + "academicRecord" + studentID + '.pdf'
+    # academicRecord = 'static/academicRecord/' + "academicRecord" + studentID + '.pdf'
     #
     # CETRecord = {"path": 'static/imgs/' + "CETRecord" + studentID + '.png', "img": CETRecord}
     # # saveImg(CETRecord)
@@ -162,8 +158,8 @@ def updateApplication():
     updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
                               CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
-    # updateCourseByStudentID(courses, studentID)
-
+    delCourseByStudentID(studentID)
+    setCourseByStudentID(courses, studentID)
     deleteOtherFile(studentID)
     deleteSpecialities(studentID)
     setOtherFiles(otherFile, studentID)
