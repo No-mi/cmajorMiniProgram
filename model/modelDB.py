@@ -166,3 +166,25 @@ class Speciality(db.Model):
         if "_sa_instance_state" in item:
             del item["_sa_instance_state"]
         return item
+
+
+class Institutions(db.Model):
+    __tablename__ = 'institution'  # 指定对应数据库表studentcourse
+
+    institutionName = db.Column(db.VARCHAR(40), primary_key=True)
+    majorName = db.Column(db.VARCHAR(40), unique=True, primary_key=True)
+
+    def __init__(self, institutionName, majorName):
+        """初始化StudentUser"""
+        self.institutionName = institutionName
+        self.majorName = majorName
+
+    def __repr__(self):
+        return '<cname %r>' % self.cname
+
+    def to_json(self):
+        """将实例对象转化为json"""
+        item = self.__dict__
+        if "_sa_instance_state" in item:
+            del item["_sa_instance_state"]
+        return item

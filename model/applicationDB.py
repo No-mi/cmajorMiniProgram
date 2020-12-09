@@ -89,7 +89,7 @@ def getSpecialties(studentID):
 
 def getSexStatistic():
     res = list(Application.query.all())
-    #身份证号码的第十七位判断性别,如果为奇数则为男性,偶数则为女性
+    # 身份证号码的第十七位判断性别,如果为奇数则为男性,偶数则为女性
     resC = list(map(lambda x: int(x.ID[16:17]) % 2, res))
     return {"male": resC.count(1), "female": resC.count(0)}
 
@@ -98,12 +98,33 @@ def getGradeStatistic():
     result = list(db.session.execute('SELECT grade,COUNT(*) as num from application GROUP BY grade'))
     return list(map(lambda x: ({str(x.grade): x.num}), result))
 
+
+def getAllInstitutionInfo():
+    result = list(db.session.execute('select distinct institutionName from institution'))
+    l = list(map(lambda x: x.institutionName, result))
+    l2 = []
+    for i in l:
+        l2.append(getAllMajor(i))
+
+    print(l)
+    res = {"insti": l, "major": l2}
+    return res
+
+
+def getAllMajor(iname):
+    sql = "select distinct majorName from institution where institutionName = '" + iname + "'"
+    result = list(db.session.execute(sql))
+    return list(map(lambda x: x.majorName, result))
+
+
 def getMajorStatistic():
     result = list(db.session.execute('SELECT major,COUNT(*) as num from application GROUP BY major'))
     return list(map(lambda x: ({str(x.major): x.num}), result))
 
+
 def getTotalStudent():
     return len(Application.query.all())
+
 
 def setOtherFiles(otherFiles, studentID):
     print(otherFiles)

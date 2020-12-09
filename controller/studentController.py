@@ -4,7 +4,8 @@ import json
 from flask import Blueprint, request, session
 
 from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, getApplicationByOpenID, deleteOtherFile, \
-    deleteSpecialities, setOtherFiles, setSpecialities, getSpecialties, getOtherFilesByStudentId, ApplicationTransfor
+    deleteSpecialities, setOtherFiles, setSpecialities, getSpecialties, getOtherFilesByStudentId, ApplicationTransfor, \
+    getAllInstitutionInfo
 # from model.couresDB import getCoursesByStudentId
 from model.couresDB import getAllCourses
 from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStudenID, \
@@ -16,17 +17,20 @@ from until.fileUtil import saveImg
 
 student = Blueprint("student", __name__)  # 实例化student蓝图
 
+
 @student.route('/getInfo', methods=["GET"])
 def getStudentInfo():
     user = getStudentUserByUserName(request.args['username'])
     return user.to_json()
 
+
 @student.route('/insertStudentUser', methods=['GET'])
 def insertStudentUser():
-    username=request.args['username']
+    username = request.args['username']
     student_id = request.args['student_id']
     insertStudent(username, student_id)
     return "OK"
+
 
 @student.route('/deleteStudentUser', methods=['GET'])
 def deleteStudentUser():
@@ -34,9 +38,11 @@ def deleteStudentUser():
     deleteStudent(student_id)
     return "OK"
 
+
 @student.route('/getAllCourses')
 def getCourses():
     return json.dumps(getAllCourses())
+
 
 @student.route('/updateStudentInfo', methods=['GET'])
 def updateStudentUserInfo():
@@ -44,6 +50,7 @@ def updateStudentUserInfo():
     student_id = request.args['student_id']
     updateStudentInfo(student_id, username)
     return "OK"
+
 
 # @student.route('/getPassedCourseByStudentID', methods=['GET'])
 # def getCourse():
@@ -61,6 +68,7 @@ def setSession():
 @student.route('/checkSession', methods=['GET'])
 def checkSession():
     return session.get('username')
+
 
 # openID=ooo&studentName=courseTest&studentID2018141531004&institute=wangan&major=wangan&grade=2018&downGrade=1&choiceAfterGraduating=1&doctor=1&ID=341602200008087181&courses=["107032030","10711500"]
 
@@ -102,6 +110,7 @@ def setApplication():
                       ID,
                       CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
     return "OK"
+
 
 @student.route('/updateApplication', methods=['POST'])
 def updateApplication():
@@ -168,6 +177,11 @@ def updateApplication():
     return getApplicationByOpenID(openID).to_json()
 
 
+@student.route('/getMajorInfo')
+def getMajorInfo():
+    return json.dumps(getAllInstitutionInfo())
+
+
 @student.route('/getApplicationByOpenID', methods=['GET'])
 def getAppli():
     openID = decrypt(request.args.get("openID"))
@@ -187,8 +201,6 @@ def login():
 def c():
     openIDen = request.args.get("openIDEN")
     return decrypt(openIDen)
-
-
 
 
 # @student.route('/getApplication', methods=['GET'])
