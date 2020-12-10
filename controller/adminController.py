@@ -27,29 +27,3 @@ def application_pdf():
     openID=request.args.get("openID")
     return application2pdf(openID)
 
-
-
-#
-# @admin.route('/getSexInfo')
-# def getSexInfo():
-#     return getSexStatistic()
-#
-#
-# @admin.route('/getGradeInfo')
-# def getGradeInfo():
-#     res = getGradeStatistic()
-#     return json.dumps(list(res))
-#
-#
-# @admin.route('/getMajorInfo')
-# def getMajorInfo():
-#     res = getMajorStatistic()
-#     return json.dumps(list(res))
-#
-#
-#
-#
-#
-# @admin.route('/getCredit', methods=['GET'])
-# def getCredit():
-#     return json.dumps(getCreditStatistic())

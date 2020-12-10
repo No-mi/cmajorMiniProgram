@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import json
 
-from flask import Blueprint, request, session
+from flask import Blueprint, request, session, send_from_directory
 
 from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, getApplicationByOpenID, deleteOtherFile, \
     deleteSpecialities, setOtherFiles, setSpecialities, getSpecialties, getOtherFilesByStudentId, ApplicationTransfor, \
@@ -146,28 +146,6 @@ def updateApplication():
     print(otherFile)
     academicRecord = req.get('academicRecord')
 
-    # 设置图片名
-    # academicRecord = {"path": 'static/imgs/' + "academicRecord" + studentID + '.png', "img": academicRecord}
-
-    # saveImg(academicRecord)
-    # academicRecord = academicRecord['path']
-    # academicRecord = 'static/academicRecord/' + "academicRecord" + studentID + '.pdf'
-    #
-    # CETRecord = {"path": 'static/imgs/' + "CETRecord" + studentID + '.png', "img": CETRecord}
-    # # saveImg(CETRecord)
-    # CETRecord = CETRecord['path']
-    # if otherFile is not  None:
-    #     for i in range(len(otherFile)):
-    #         file = {"path": 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png', "img": otherFile[i]}
-    #         # saveImg(file)
-    #         otherFile[i] = 'static/imgs/' + "otherFile" + str(studentID) + '-' + str(i) + '.png'
-    # if speciality is  not None:
-    #     for i in range(len(speciality)):
-    #         file = {"path": 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png',
-    #                 "img": speciality[i]}
-    #         # saveImg(file)
-    #         speciality[i] = 'static/imgs/' + "speciality" + str(studentID) + '-' + str(i) + '.png'
-    # if(!academicRecord)
     if (speciality is None):
         specialitylen = 0
     else:
@@ -223,7 +201,7 @@ def c():
 
 # openID=099&studentName=courseTest&studentID=2018141518751&institute=网安&major=网安&grade=2018&downGrade=1&choiceAfterGraduating=1&grade=2018&doctor=1&ID=341602200008087191&courses=["107032030","107115000","105366020","105367010","888004010","900001010","314030020","912002010","201080030","201137050"]&CET=1&CETScore=450&GPA=3.7
 
-@student.route('/setExcel')
+@student.route('/getZip')
 def excel():
     outputdir()
-    return "OK"
+    return send_from_directory("", "out.zip", as_attachment=True)

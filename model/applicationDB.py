@@ -150,7 +150,7 @@ def setSpecialities(specialities, studentID):
 
 def getSpecialStudentStatistic():
     result = list(db.session.execute(
-        'select * from   (SELECT studentId,COUNT(*) as num from specialities GROUP BY studentId) as t where num=0'))
+        'select * from   (SELECT studentId,COUNT(*) as num from specialities GROUP BY studentId) as t where num!=0'))
     return len(result)
 
 def deleteOtherFile(studentID):
