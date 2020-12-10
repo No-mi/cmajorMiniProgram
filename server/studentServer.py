@@ -141,9 +141,9 @@ def outputdir():
         shutil.copy(application.academicRecord,
                     dirpath + "/academicRecord." + getPictype(application.academicRecord))
 
-        for i in applications.specialities:
+        for i in application.specialities:
             shutil.copy(i, dirpath + "/specialities" + str(i) + "." + getPictype(i))
-        for i in applications.otherFiles:
+        for i in application.otherFiles:
             shutil.copy(i, dirpath + "/otherFiles" + str(i) + "." + getPictype(i))
     shutil.make_archive("out", "zip", "export")
 
