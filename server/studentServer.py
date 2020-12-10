@@ -11,8 +11,10 @@ from model.applicationDB import getApplicationByOpenID, getAllApplication
 from model.studentDB import getStudentUserByOpenID, insertStudent
 from binascii import b2a_hex, a2b_hex
 
-
 # 如果text不足16位的倍数就用空格补足为16位
+from server.adminServer import application2pdf
+
+
 def add_to_16(text):
     if len(text.encode('utf-8')) % 16:
         add = 16 - (len(text.encode('utf-8')) % 16)
@@ -137,6 +139,7 @@ def outputdir():
         dirpath = "export/" + application.studentID
         if os.path.exists(dirpath) is not True:
             os.mkdir(dirpath)
+        application2pdf(application, dirpath + "/")
         shutil.copy(application.CETRecord, dirpath + "/CETRecord." + getPictype(application.CETRecord))
         shutil.copy(application.academicRecord,
                     dirpath + "/academicRecord." + getPictype(application.academicRecord))
