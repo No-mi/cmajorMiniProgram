@@ -31,6 +31,7 @@ def insertApplicqtion(openID, studentName, studentID, institute, major, grade, d
     application = Application(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
                               CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen)
+    print("fin", application.to_json())
     db.session.add(application)
     db.session.commit()
 
