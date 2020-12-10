@@ -100,10 +100,10 @@ def setApplication():
     academicRecord = req.get('academicRecord')
     phoneNumber = req.get('phoneNumber')
     # academicRecord = 'static/academicRecord/' + "academicRecord" + studentID + '.pdf'
-    if (speciality is None):
-        specialitylen = 0
-    else:
-        specialitylen = len(speciality)
+    # if (speciality is None):
+    #     specialitylen = 0
+    # else:
+    #     specialitylen = len(speciality)
 
     setCourseByStudentID(courses, studentID)
 
@@ -112,7 +112,7 @@ def setApplication():
 
     insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
                       ID,
-                      CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen)
+                      CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
     return "OK"
 
 

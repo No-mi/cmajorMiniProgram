@@ -69,7 +69,7 @@ class Application(db.Model):
     specialities = []
 
     def __init__(self, openID, name, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor, ID,
-                 CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen):
+                 CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord):
         """初始化application"""
         self.openID = openID
         self.name = name

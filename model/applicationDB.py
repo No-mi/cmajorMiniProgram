@@ -26,7 +26,7 @@ def getApplicationByOpenID(openID):
 
 def insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
                       ID,
-                      CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen):
+                      CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord):
     """插入一个申请表信息"""
     application = Application(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
