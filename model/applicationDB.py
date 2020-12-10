@@ -31,7 +31,7 @@ def insertApplicqtion(openID, studentName, studentID, institute, major, grade, d
     application = Application(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
                               CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen)
-    print("fin", application.to_json())
+    print("fin", application.CET, application.CETScore)
     db.session.add(application)
     db.session.commit()
 
@@ -149,8 +149,9 @@ def setSpecialities(specialities, studentID):
 
 
 def getSpecialStudentStatistic():
-    return list(db.session.execute('select count(*) as count from application where speciality=0'))[0].count
-
+    result = list(db.session.execute(
+        'select * from (SELECT studentId,COUNT(*) as num from specialities GROUP BY studentId) as t where num=0'))
+    return len(result)
 
 def deleteOtherFile(studentID):
     OtherFile.query.filter_by(studentID=studentID).delete()
