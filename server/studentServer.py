@@ -164,7 +164,7 @@ def getExcel(applications):
             ws.write(row, 11, application.CETScore)
 
         row = row + 1
-    wb.save("export/test.xls")
+    wb.save("export/applications.xls")
 
 
 def outputdir():
