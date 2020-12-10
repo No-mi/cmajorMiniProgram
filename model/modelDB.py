@@ -87,7 +87,7 @@ class Application(db.Model):
         self.GPA = GPA
         self.academicRecord = academicRecord
         self.CETRecord = CETRecord
-        self.specialities = specialitylen
+        # self.specialities = specialitylen
 
     def __repr__(self):
         return '<openID %r>' % self.openID

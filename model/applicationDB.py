@@ -30,7 +30,7 @@ def insertApplicqtion(openID, studentName, studentID, institute, major, grade, d
     """插入一个申请表信息"""
     application = Application(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
-                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen)
+                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
     print("fin", application.CET, application.CETScore)
     db.session.add(application)
     db.session.commit()
@@ -49,7 +49,7 @@ def updateApplicationByOpenID(openID, studentName, studentID, institute, major, 
          'major': major, 'grade': grade,
          'downGrade': downGrade, 'choiceAfterGraduating': choiceAfterGraduating, 'doctor': doctor, 'ID': ID,
          'academicRecord': academicRecord,
-         'CETRecord': CETRecord, 'CET': CET, 'CETScore': CETScore, 'GPA': GPA, 'specialities': speciality})
+         'CETRecord': CETRecord, 'CET': CET, 'CETScore': CETScore, 'GPA': GPA})
 
 def getAllApplication():
     """获取所有申请信息"""
