@@ -115,15 +115,54 @@ def getExcel(applications):
     wb = xlwt.Workbook()
     ws = wb.add_sheet('A Test Sheet')
     row = 0
-    titles = ["姓名", "学号", "原学院", "原专业"]
+    titles = ["姓名", "学号", "原学院", "原专业", "身份证号", "手机号", "绩点", "年级", "是否同意降级", "是否读博", "毕业后选择", "四级成绩", "六级成绩"]
     l = 0
     for title in titles:
         ws.write(row, l, title)
         l = l + 1
     row = row + 1
     for application in applications:
+        if (application.CET == 0):
+            CET = "四级"
+        else:
+            CET = "六级"
+        D = ""
+        if (application.doctor == 0):
+            D = "否"
+        else:
+            D = "是"
+        Downgrad = ""
+        if application.downGrade == 0:
+            Downgrad = "否"
+        else:
+            Downgrad = "是"
+        c = ""
+        if application.choiceAfterGraduating == 0:
+            c = "国外深造"
+        elif application.choiceAfterGraduating == 1:
+            c = "国内读研"
+        elif application.choiceAfterGraduating == 2:
+            c = "就业"
+        else:
+            c = "待定"
         ws.write(row, 0, application.name)
         ws.write(row, 1, application.studentID)
+        ws.write(row, 2, application.institute)
+        ws.write(row, 3, application.major)
+        ws.write(row, 4, application.ID)
+        ws.write(row, 5, application.phoneNumber)
+        ws.write(row, 6, application.GPA)
+        ws.write(row, 7, application.grade)
+        ws.write(row, 8, Downgrad)
+        ws.write(row, 9, D)
+        ws.write(row, 10, c)
+        if application.CET == 1:
+            ws.write(row, 11, "未提交")
+            ws.write(row, 12, application.CETScore)
+        else:
+            ws.write(row, 12, "未提交")
+            ws.write(row, 11, application.CETScore)
+
         row = row + 1
     wb.save("export/test.xls")
 
