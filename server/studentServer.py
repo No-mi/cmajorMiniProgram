@@ -137,8 +137,19 @@ def outputdir():
         dirpath = "export/" + application.studentID
         if os.path.exists(dirpath) is not True:
             os.mkdir(dirpath)
+        shutil.copy(application.CETRecord, dirpath + "/CETRecord." + getPictype(application.CETRecord))
+        shutil.copy(application.academicRecord, dirpath + "/academicRecord." + getPictype(application.academicRecord))
+
+        for i in applications.specialities:
+            shutil.copy(i, dirpath + "/specialities" + str(i) + "." + getPictype(i))
+        for i in applications.otherFiles:
+            shutil.copy(i, dirpath + "/otherFiles" + str(i) + "." + getPictype(i))
     shutil.make_archive("out", "zip", "export")
 
+
+def getPictype(path):
+    l = path.split(".")
+    return l[-1]
 
 def del_file(filepath):
     """
