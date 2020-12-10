@@ -140,11 +140,14 @@ def outputdir():
         shutil.copy(application.CETRecord, dirpath + "/CETRecord." + getPictype(application.CETRecord))
         shutil.copy(application.academicRecord,
                     dirpath + "/academicRecord." + getPictype(application.academicRecord))
-
+        num = 1
         for i in application.specialities:
             shutil.copy(i, dirpath + "/specialities" + str(i) + "." + getPictype(i))
+            num = num + 1
+        num = 1
         for i in application.otherFiles:
             shutil.copy(i, dirpath + "/otherFiles" + str(i) + "." + getPictype(i))
+            num = num + 1
     shutil.make_archive("out", "zip", "export")
 
 
