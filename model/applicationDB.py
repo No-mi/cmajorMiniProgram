@@ -49,7 +49,7 @@ def updateApplicationByOpenID(openID, studentName, studentID, institute, major, 
          'major': major, 'grade': grade,
          'downGrade': downGrade, 'choiceAfterGraduating': choiceAfterGraduating, 'doctor': doctor, 'ID': ID,
          'academicRecord': academicRecord,
-         'CETRecord': CETRecord, 'CET': CET, 'CETScore': CETScore, 'GPA': GPA, 'speciality': speciality})
+         'CETRecord': CETRecord, 'CET': CET, 'CETScore': CETScore, 'GPA': GPA, 'specialities': speciality})
 
 def getAllApplication():
     """获取所有申请信息"""
