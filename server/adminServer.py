@@ -1,23 +1,7 @@
-# # import tempfile
-# from reportlab.lib import colors
-# from reportlab.pdfbase import pdfmetrics
-# # from reportlab.pdfbase.pdfmetrics import registerFontFamily
-# from reportlab.pdfbase.ttfonts import TTFont
-# from reportlab.platypus import Paragraph, SimpleDocTemplate, Table
-# # from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, LongTable, Image
-# from reportlab.lib.styles import getSampleStyleSheet
-# # from reportlab.lib.enums import TA_JUSTIFY
-# # from io import BytesIO
-#
-# from model.applicationDB import getApplicationByOpenID
-# # 获取申请表信息
-# # application = getApplicationByOpenID(Application.openID)
 from reportlab.lib import colors
 from reportlab.pdfbase import pdfmetrics
-# from reportlab.pdfbase.pdfmetrics import registerFontFamily
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Table
-# from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, LongTable, Image
 from reportlab.lib.styles import getSampleStyleSheet
 
 
@@ -123,10 +107,3 @@ def application2pdf(application, path):
     # try:
     doc = SimpleDocTemplate(path + 'applicationTable.pdf')
     doc.build(story)
-    # except Exception as e:
-    #     print('application2pdf failed')
-    #     return False
-    # print('application2pdf successed')
-    # return True
-#保险起见，给varchar或text赋值时一定要带上单引号！
-# application2pdf('111')

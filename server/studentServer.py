@@ -6,10 +6,7 @@ from Crypto.Cipher import AES
 import base64
 import xlwt
 import os
-import zipfile
 from model.applicationDB import getApplicationByOpenID, getAllApplication
-from model.studentDB import getStudentUserByOpenID, insertStudent
-from binascii import b2a_hex, a2b_hex
 
 # 如果text不足16位的倍数就用空格补足为16位
 from server.adminServer import application2pdf
@@ -98,10 +95,8 @@ def onLogin(code, encryptedData, iv):
     print(userInfo)
     user = getApplicationByOpenID(userInfo['openId'])
     if (user):
-        # print(user.to_json())
         return {"enOpenID": encrypt(userInfo['openId']), "exist": 1}
     else:
-        # insertStudent(userInfo['nickName'],userInfo['openId'])
         return {"enOpenID": encrypt(userInfo['openId']), "exist": 0}
 
 
@@ -210,4 +205,27 @@ def del_file(filepath):
             os.remove(file_path)
         elif os.path.isdir(file_path):
             shutil.rmtree(file_path)
-    
+
+
+def setExcel(applications):
+    wb = xlwt.Workbook()
+    ws = wb.add_sheet('A Test Sheet')
+    row = 0
+    titles = ["姓名", "学号", "原学院", "原专业", "身份证号", "手机号", "绩点",
+              "年级", "是否同意降级", "是否读博", "毕业后选择", "四级成绩", "六级成绩"]
+    l = 0
+    for title in titles:
+        ws.write(row, l, title)
+        l = l + 1
+    row = row + 1
+    for application in applications:
+        ws.write(row, 0, application.name)
+        ws.write(row, 1, application.studentID)
+        ws.write(row, 2, application.institute)
+        ws.write(row, 3, application.major)
+        ws.write(row, 4, application.ID)
+        ws.write(row, 5, application.phoneNumber)
+        ws.write(row, 6, application.GPA)
+        ws.write(row, 7, application.grade)
+        row = row + 1
+    wb.save("export/applications.xls")

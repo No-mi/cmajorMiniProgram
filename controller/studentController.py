@@ -1,28 +1,19 @@
 # -*- coding: UTF-8 -*-
 import json
-
 from flask import Blueprint, request, session, send_from_directory
-
 from model.applicationDB import insertApplicqtion, updateApplicationByOpenID, getApplicationByOpenID, deleteOtherFile, \
-    deleteSpecialities, setOtherFiles, setSpecialities, getSpecialties, getOtherFilesByStudentId, ApplicationTransfor, \
-    getAllInstitutionInfo
-# from model.couresDB import getCoursesByStudentId
+    deleteSpecialities, setOtherFiles, setSpecialities, ApplicationTransfor, getAllInstitutionInfo
 from model.couresDB import getAllCourses
-from model.studentCourseDB import setCourseByStudentID, getPassedCoursesByStudenID, \
-    getCreditStatistic, delCourseByStudentID
+from model.studentCourseDB import setCourseByStudentID, delCourseByStudentID
 from model.studentDB import getStudentUserByUserName, insertStudent, deleteStudent, updateStudentInfo
-from model.modelDB import StudentUser
 from server.studentServer import checkUser, onLogin, decrypt, getExcel, outputdir
-from until.fileUtil import saveImg
 
 student = Blueprint("student", __name__)  # 实例化student蓝图
-
 
 @student.route('/getInfo', methods=["GET"])
 def getStudentInfo():
     user = getStudentUserByUserName(request.args['username'])
     return user.to_json()
-
 
 @student.route('/insertStudentUser', methods=['GET'])
 def insertStudentUser():
@@ -31,18 +22,15 @@ def insertStudentUser():
     insertStudent(username, student_id)
     return "OK"
 
-
 @student.route('/deleteStudentUser', methods=['GET'])
 def deleteStudentUser():
     student_id = request.args['student_id']
     deleteStudent(student_id)
     return "OK"
 
-
 @student.route('/getAllCourses')
 def getCourses():
     return json.dumps(getAllCourses())
-
 
 @student.route('/updateStudentInfo', methods=['GET'])
 def updateStudentUserInfo():
@@ -51,26 +39,9 @@ def updateStudentUserInfo():
     updateStudentInfo(student_id, username)
     return "OK"
 
-
-# @student.route('/getPassedCourseByStudentID', methods=['GET'])
-# def getCourse():
-#     student_id = request.args['student_id']
-#     # courses = getCoursesByStudentId(student_id)
-#     return json.dumps(list(map(lambda x: x.cId, courses)))
-
-@student.route('/setSession', methods=['GET'])
-def setSession():
-    session.permanent = True
-    session['username'] = 'sess'
-    return 'sessionTest'
-
-
 @student.route('/checkSession', methods=['GET'])
 def checkSession():
     return session.get('username')
-
-
-# openID=ooo&studentName=courseTest&studentID2018141531004&institute=wangan&major=wangan&grade=2018&downGrade=1&choiceAfterGraduating=1&doctor=1&ID=341602200008087181&courses=["107032030","10711500"]
 
 @student.route('/setApplication', methods=['POST'])
 def setApplication():
@@ -78,7 +49,6 @@ def setApplication():
         return 0
     req = json.loads(request.get_data(as_text=True))
     print('req', req)
-
     studentName = req.get("name")
     openID = decrypt(req.get("openID"))
     studentID = req.get("studentID")
@@ -99,29 +69,19 @@ def setApplication():
     otherFile = req.get('otherFiles')
     academicRecord = req.get('academicRecord')
     phoneNumber = req.get('phoneNumber')
-    # academicRecord = 'static/academicRecord/' + "academicRecord" + studentID + '.pdf'
-    # if (speciality is None):
-    #     specialitylen = 0
-    # else:
-    #     specialitylen = len(speciality)
-
     setCourseByStudentID(courses, studentID)
-
     setOtherFiles(otherFile, studentID)
     setSpecialities(speciality, studentID)
-
     insertApplicqtion(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating, doctor,
                       ID,
                       CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
     return "OK"
-
 
 @student.route('/updateApplication', methods=['POST'])
 def updateApplication():
     print("test")
     req = json.loads(request.get_data(as_text=True))
     print('req', req)
-
     studentName = req.get("name")
     # print("student", studentName)
     openID = decrypt(req.get("openID"))
@@ -139,21 +99,14 @@ def updateApplication():
     CETScore = req.get("CETScore")
     GPA = req.get("GPA")
     phoneNumber = req.get("phoneNumber")
-
     speciality = req.get('specialities')
     CETRecord = req.get('CETRecord')
     otherFile = req.get('otherFiles')
     print(otherFile)
     academicRecord = req.get('academicRecord')
-
-    if (speciality is None):
-        specialitylen = 0
-    else:
-        specialitylen = len(speciality)
-
     updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
-                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, specialitylen)
+                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord)
     delCourseByStudentID(studentID)
     setCourseByStudentID(courses, studentID)
     deleteOtherFile(studentID)
@@ -188,18 +141,6 @@ def login():
 def c():
     openIDen = request.args.get("openIDEN")
     return decrypt(openIDen)
-
-
-# @student.route('/getApplication', methods=['GET'])
-# def getApplication():
-#     openID = request.args.get("openID")
-#     appli = getApplicationByOpenID(openID)
-#     appli.courses = getPassedCoursesByStudenID(appli.studentID)
-#     appli.otherFiles=getOtherFilesByStudentId(appli.studentID)
-#     appli.specialities=getSpecialties(appli.studentID)
-#     return appli.to_json()
-
-# openID=099&studentName=courseTest&studentID=2018141518751&institute=网安&major=网安&grade=2018&downGrade=1&choiceAfterGraduating=1&grade=2018&doctor=1&ID=341602200008087191&courses=["107032030","107115000","105366020","105367010","888004010","900001010","314030020","912002010","201080030","201137050"]&CET=1&CETScore=450&GPA=3.7
 
 @student.route('/getZip')
 def excel():

@@ -65,18 +65,6 @@ def getPassedCoursesByStudenID(studentID):
     print("getCourse", courses)
     return courses
 
-
-# def updateCourseByStudentID(courses, studentID):
-#     coursesAll = getAllCourses()
-#     print("courses", courses)
-#     print(studentID)
-#     for course in coursesAll:
-#         if course in courses:
-#             StudentCourse.query.filter_by(cId=course, studentId=studentID).update({'havePassed': 1})
-#         else:
-#             StudentCourse.query.filter_by(cId=course, studentId=studentID).update({'havePassed': 0})
-
-
 def getCreditStatistic():
     result = list(db.session.execute(
         'SELECT t1.studentId,sum(t2.credit) as creditSum FROM studentcourse as t1 ,courses as t2 WHERE  t1.cId=t2.cId and t1.havePassed=1 GROUP BY t1.studentId'))
@@ -97,6 +85,3 @@ def getCreditStatistic():
 
 def delCourseByStudentID(studentId):
     StudentCourse.query.filter_by(studentId=studentId).delete()
-    # resP = list(map(lambda x: (int((int(x.creditSum) // (totalCredit * 0.7)))), result))
-    # print(resP)
-    # return {'pass': resP.count(1), "NotPass": resP.count(0)}

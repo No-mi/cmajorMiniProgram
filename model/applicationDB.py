@@ -42,7 +42,7 @@ def deleteApplication(name, openID, studentId):
 
 def updateApplicationByOpenID(openID, studentName, studentID, institute, major, grade, downGrade, choiceAfterGraduating,
                               doctor, ID,
-                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord, speciality):
+                              CET, CETScore, GPA, phoneNumber, academicRecord, CETRecord):
     """修改指定姓名用户的姓名"""
     Application.query.filter_by(openID=openID).update(
         {'name': studentName, 'studentID': studentID, 'phoneNumber': phoneNumber, 'institute': institute,
